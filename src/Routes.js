@@ -3,6 +3,7 @@ import Nav from "./components/micro-components/Nav";
 import Homepage from "./components/sites/Homepage";
 import UserProfile from "./components/sites/UserProfile";
 import Status from "./components/sites/Status";
+import SignUp from "./components/sites/SignUp";
 
 
 
@@ -59,6 +60,11 @@ const Routes = () => {
                     <Route exact path="/status">
                         <Status />
                     </Route>
+                    <Route exact path="/signup">
+                        <SignUp />
+                    </Route>
+                    
+                    
                 </Switch>
             </div>
        
