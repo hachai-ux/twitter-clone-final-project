@@ -4,7 +4,8 @@ const Nav = () => {
     return (
         <nav>
             <h3>Twitter</h3>
-            <ul className="nav-links">
+    
+                <ul className="nav-links">
                 <li>
                 <Link to='/'>Home</Link>
                 </li>
@@ -12,6 +13,9 @@ const Nav = () => {
                 <Link to='/profile'>Profile</Link>
                 </li>
             </ul>
+
+
+            
         </nav>
     );
 };

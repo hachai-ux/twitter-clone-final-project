@@ -9,17 +9,20 @@ const Routes = () => {
     return (
         <BrowserRouter>
             <Nav />
+            <div className='content'>
             <Switch>
-                <Route exact path="/">
-                    <Homepage />
-                </Route>
-                <Route exact path="/user-profile">
-                    <UserProfile />    
-                </Route>
-                <Route exact path="/status">
-                    <Status />
-                </Route>
-            </Switch>
+                    <Route exact path="/">
+                        <Homepage />
+                    </Route>
+                    <Route exact path="/user-profile">
+                        <UserProfile />    
+                    </Route>
+                    <Route exact path="/status">
+                        <Status />
+                    </Route>
+                </Switch>
+            </div>
+           
         </BrowserRouter>
     )
 }
