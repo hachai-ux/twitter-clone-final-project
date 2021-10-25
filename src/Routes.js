@@ -7,10 +7,13 @@ import Status from "./components/sites/Status";
 
 
 // Import the functions you need from the SDKs you need
+
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -25,6 +28,20 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+
+/*
+// Initialize the FirebaseUI Widget using Firebase.
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+ui.start('#firebaseui-auth-container', {
+  signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+  ],
+  // Other config options...
+});
+*/
 
 
 const Routes = () => {
@@ -44,6 +61,7 @@ const Routes = () => {
                     </Route>
                 </Switch>
             </div>
+       
            
         </BrowserRouter>
     )
