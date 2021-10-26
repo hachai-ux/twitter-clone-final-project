@@ -11,7 +11,6 @@ const Homepage = () => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
-                const uid = user.uid;
                 setUser(user);
                 
     
@@ -30,7 +29,7 @@ const Homepage = () => {
     
     const UserData = () => {
 
-        if (user) {
+        if (user && (user.emailVerified === true)) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/firebase.User
             const uid = user.uid;

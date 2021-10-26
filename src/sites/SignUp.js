@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 
@@ -30,9 +30,11 @@ const SignUp = () => {
             const user = userCredential.user;
             // ...
             console.log(user);
-            user.sendEmailVerification();
+            history.push('/Verification');
+            console.log('pushed?');
+        }).then(() => {
+            sendEmailVerification(auth.currentUser);
             auth.signOut();
-            history.push('/Verification')
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -46,7 +48,7 @@ const SignUp = () => {
 
     return (
         <form onSubmit={(e) => { handleSubmit(e) }}>
-            <h1>Signup</h1>
+            <h1>Sign up</h1>
             <label htmlFor='email'>
             E-mail:
             <input type="email" value={email} name="email" onChange={(e) => { handleChangeEmail(e) }}  required/>
@@ -56,7 +58,7 @@ const SignUp = () => {
                 Password:
             <input type="password" value={password} name="password" onChange={(e) => { handleChangePassword(e) }} required/>
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Sign up" />
         </form>
         
     );

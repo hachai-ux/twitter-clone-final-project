@@ -30,7 +30,7 @@ const Login = () => {
             const user = userCredential.user;
             // ...
             console.log(user);
-            history.push('/Home')
+            history.push('/');
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -44,7 +44,7 @@ const Login = () => {
 
     return (
         <form onSubmit={(e) => { handleSubmit(e) }}>
-            <h1>Login</h1>
+            <h1>Log in</h1>
             <label htmlFor='email'>
             E-mail:
             <input type="email" value={email} name="email" onChange={(e) => { handleChangeEmail(e) }}  required/>
@@ -54,7 +54,7 @@ const Login = () => {
                 Password:
             <input type="password" value={password} name="password" onChange={(e) => { handleChangePassword(e) }} required/>
         </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Log in" />
         </form>
         
     );
