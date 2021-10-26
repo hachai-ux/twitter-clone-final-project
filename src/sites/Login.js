@@ -1,9 +1,9 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
 
 
-const SignUp = () => {
+const Login = () => {
 
 
     const [email, setEmail] = useState('');
@@ -24,15 +24,13 @@ const SignUp = () => {
         e.preventDefault();
         
         const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, password)
+        signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
             // ...
             console.log(user);
-            user.sendEmailVerification();
-            auth.signOut();
-            history.push('/Verification')
+            history.push('/Home')
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -46,7 +44,7 @@ const SignUp = () => {
 
     return (
         <form onSubmit={(e) => { handleSubmit(e) }}>
-            <h1>Signup</h1>
+            <h1>Login</h1>
             <label htmlFor='email'>
             E-mail:
             <input type="email" value={email} name="email" onChange={(e) => { handleChangeEmail(e) }}  required/>
@@ -62,4 +60,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default Login;

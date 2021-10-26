@@ -4,6 +4,7 @@ import Homepage from "./sites/Homepage";
 import UserProfile from "./sites/UserProfile";
 import Status from "./sites/Status";
 import SignUp from "./sites/SignUp";
+import Login from "./sites/Login";
 import Verification from "./sites/Verification";
 
 
@@ -65,6 +66,9 @@ const Routes = () => {
                     </Route>
                     <Route exact path="/verification">
                         <Verification />
+                    </Route>
+                     <Route exact path="/login">
+                        <Login />
                     </Route>
                     
                     

@@ -15,6 +15,9 @@ const Nav = () => {
                 <li>
                 <Link to='/signup'>TempSignUp</Link>
                 </li>
+                <li>
+                <Link to='/login'>TempLogin</Link>
+                </li>
             </ul>
 
 
