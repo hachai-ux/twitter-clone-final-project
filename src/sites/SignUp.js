@@ -1,11 +1,14 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom';
+
 
 const SignUp = () => {
 
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
 
     const handleChangeEmail = (e) => {
         setEmail(e.target.value);
@@ -16,6 +19,7 @@ const SignUp = () => {
     }
 
     const handleSubmit = (e) => {
+       
 
         e.preventDefault();
         
@@ -26,6 +30,7 @@ const SignUp = () => {
             const user = userCredential.user;
             // ...
             console.log(user);
+            history.push('/Verification')
         })
         .catch((error) => {
             const errorCode = error.code;

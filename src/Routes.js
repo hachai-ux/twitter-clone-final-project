@@ -1,10 +1,10 @@
 import { BrowserRouter, Switch, Route} from "react-router-dom";
-import Nav from "./components/micro-components/Nav";
-import Homepage from "./components/sites/Homepage";
-import UserProfile from "./components/sites/UserProfile";
-import Status from "./components/sites/Status";
-import SignUp from "./components/sites/SignUp";
-
+import Nav from "./components/Nav";
+import Homepage from "./sites/Homepage";
+import UserProfile from "./sites/UserProfile";
+import Status from "./sites/Status";
+import SignUp from "./sites/SignUp";
+import Verification from "./sites/Verification";
 
 
 // Import the functions you need from the SDKs you need
@@ -62,6 +62,9 @@ const Routes = () => {
                     </Route>
                     <Route exact path="/signup">
                         <SignUp />
+                    </Route>
+                    <Route exact path="/verification">
+                        <Verification />
                     </Route>
                     
                     
