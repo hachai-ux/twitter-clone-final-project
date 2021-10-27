@@ -1,5 +1,6 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
+import StatusPoster from '../components/StatusPoster';
 
 const Homepage = () => {
 
@@ -27,7 +28,7 @@ const Homepage = () => {
     }, []);
   
     
-    const UserData = () => {
+    const LoggedIn = () => {
 
         if (user && (user.emailVerified === true)) {
             // User is signed in, see docs for a list of available properties
@@ -35,7 +36,11 @@ const Homepage = () => {
             const uid = user.uid;
 
             return (
-                <div>{uid}</div>
+                
+                <div>
+                    <StatusPoster user={user} />
+                    {uid}
+                </div>
             )
             // ...
         } else {
@@ -50,7 +55,7 @@ const Homepage = () => {
     return (
         <div className="homepage">
             <h1>Home</h1>
-            <UserData />
+            <LoggedIn />
             
         </div>
         
