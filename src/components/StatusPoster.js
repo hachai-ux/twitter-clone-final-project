@@ -17,21 +17,15 @@ const StatusPoster = (props) => {
         e.preventDefault();
 
         try {
-            /*
-            const docRef = await props.db.collection('Tweets').doc(props.user.uid).collection('Statuses').add({
-            name: props.user.uid,
-            status: status,
-            time: serverTimestamp(),
-            });
-            */
-            
+        
             const docRef = await addDoc(collection(props.db, "Tweets", props.user.uid, "Statuses"), {
                 name: props.user.uid,
                             status: status,
-                            time: serverTimestamp(),
+                            timestamp: serverTimestamp(),
                 });
              
-              setStatus('');
+            setStatus('');
+            props.changeStatusSubmitted(true);
          }
         
   catch(error) {
