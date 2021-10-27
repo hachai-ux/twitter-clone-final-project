@@ -53,7 +53,7 @@ const Routes = () => {
             <div className='content'>
             <Switch>
                     <Route exact path="/">
-                        <Homepage />
+                        <Homepage db={db} />
                     </Route>
                     <Route exact path="/user-profile">
                         <UserProfile />    

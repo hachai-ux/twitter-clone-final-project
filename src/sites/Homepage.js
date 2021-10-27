@@ -2,7 +2,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import StatusPoster from '../components/StatusPoster';
 
-const Homepage = () => {
+const Homepage = (props) => {
 
     const [user, setUser] = useState(null);
 
@@ -38,7 +38,7 @@ const Homepage = () => {
             return (
                 
                 <div>
-                    <StatusPoster user={user} />
+                    <StatusPoster db={props.db} user={user} />
                     {uid}
                 </div>
             )

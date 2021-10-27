@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { collection, serverTimestamp, addDoc} from 'firebase/firestore';
 
 const StatusPoster = (props) => {
 
@@ -10,11 +11,35 @@ const StatusPoster = (props) => {
     }
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
        
 
         e.preventDefault();
-        setStatus('');
+
+        try {
+            /*
+            const docRef = await props.db.collection('Tweets').doc(props.user.uid).collection('Statuses').add({
+            name: props.user.uid,
+            status: status,
+            time: serverTimestamp(),
+            });
+            */
+            
+            const docRef = await addDoc(collection(props.db, "Tweets", props.user.uid, "Statuses"), {
+                name: props.user.uid,
+                            status: status,
+                            time: serverTimestamp(),
+                });
+             
+              setStatus('');
+         }
+        
+  catch(error) {
+    console.error('Error writing new message to Firebase Database', error);
+  }
+
+
+       
     
     }
 
