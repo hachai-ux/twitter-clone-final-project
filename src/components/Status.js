@@ -7,9 +7,11 @@ const Status = (props) => {
 
          
     const deleteStatus = async () => {
-        console.log(props.doc.data());
-        await deleteDoc(props.doc);
-        //props.changeStatusSubimport { deleteDoc } from "firebase/firestore";mitted(true);
+        console.log(props.doc.ref);
+      
+        //delete on docRef not doc
+        await deleteDoc(props.doc.ref);
+        props.changeStatusSubmitted(true);
 }
 
 
