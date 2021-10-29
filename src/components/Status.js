@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { deleteDoc } from "firebase/firestore";
 
 const Status = (props) => {
@@ -63,4 +63,4 @@ if (!e.target.matches('.dropbtn')) {
     )
 }
 
-export default Status;
+export default memo(Status);

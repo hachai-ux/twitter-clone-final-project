@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import StatusPoster from '../components/StatusPoster';
 import UserStatuses from '../components/UserStatuses';
 
@@ -8,9 +8,9 @@ const Homepage = (props) => {
     const [user, setUser] = useState(null);
     const [statusSubmitted, setStatusSubmitted] = useState(null);
 
-    const changeStatusSubmitted = (bool) => {
+    const changeStatusSubmitted = useCallback((bool) => {
         setStatusSubmitted(bool);
-    }
+    },[]);
 
     useEffect(() => {
         const auth = getAuth();
