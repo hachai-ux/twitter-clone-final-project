@@ -24,8 +24,9 @@ const StatusPoster = (props) => {
                             timestamp: serverTimestamp(),
                 });
              
+            console.log(docRef);
             setStatus('');
-            props.changeStatusSubmitted(true);
+            
          }
         
   catch(error) {

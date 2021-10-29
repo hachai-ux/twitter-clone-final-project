@@ -11,7 +11,7 @@ const Status = (props) => {
       
         //delete on docRef not doc
         await deleteDoc(props.doc.ref);
-        props.changeStatusSubmitted(true);
+       
 }
 
 
@@ -44,6 +44,8 @@ if (!e.target.matches('.dropbtn')) {
         }
         else return null;
     }
+
+    console.log(props.doc.data());
 
     return (
         <div>
