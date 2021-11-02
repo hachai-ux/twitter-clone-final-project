@@ -62,7 +62,7 @@ const Routes = () => {
                         <Status />
                     </Route>
                     <Route exact path="/signup">
-                        <SignUp />
+                        <SignUp db={db} />
                     </Route>
                     <Route exact path="/verification">
                         <Verification />
