@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Logout from './Logout';
 
 const Nav = () => {
     return (
@@ -18,6 +19,10 @@ const Nav = () => {
                 <li>
                 <Link to='/login'>TempLogin</Link>
                 </li>
+                <li>
+                    <Logout />
+                </li>
+                
             </ul>
 
 

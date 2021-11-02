@@ -19,8 +19,8 @@ const UserStatuses = (props) => {
             setQuerySnapshot(await getDocs(q));
          
 
-         
-            // Start listening to the query.
+            //Start listening to the query.
+            //Use listener instead of having to run query again in useEffect
             onSnapshot(q, function (snapshot) {
                 const source = snapshot.metadata.hasPendingWrites ? "Local" : "Server";
                 if (source === 'Server') {
