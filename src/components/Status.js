@@ -1,10 +1,19 @@
-import { useState, useEffect, memo } from 'react';
-import { deleteDoc } from "firebase/firestore";
+import { useState, useEffect, memo, useContext } from 'react';
+import { deleteDoc, query, collection, getDocs } from "firebase/firestore";
+import { UserContext } from '../context/Context';
+import { getAuth } from "firebase/auth";
+
 
 const Status = (props) => {
 
     const [dropdownStatus, setDropdownStatus] = useState(false);
+    const [username, setUsername] = useState('');
 
+    //context redundant
+     const contextValue = useContext(UserContext);
+    const { userState } = contextValue;
+
+    console.log(userState);
          
     const deleteStatus = async () => {
         console.log(props.doc.ref);
@@ -26,7 +35,33 @@ if (!e.target.matches('.dropbtn')) {
 }
 };
 
+    useEffect(() => {
 
+          
+        const getUsername = async () => {
+
+            const auth = getAuth();
+            const user = auth.currentUser;
+            const q = query(collection(props.db, "Users"));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                    
+
+                //loop through documents and get username for the uid
+                if (doc.data().uid === user.uid) {
+                    
+                    setUsername(doc.id);
+                }
+            });
+
+        
+        };
+        getUsername();
+        
+    },[])
+  
+    
 
 
 
@@ -49,7 +84,7 @@ if (!e.target.matches('.dropbtn')) {
 
     return (
         <div>
-            <div>{props.doc.data().name}</div>
+            <div>@{username}</div>
             <div>{props.doc.data().status}</div>
             <div>{props.doc.data().timestamp.toDate().toString()}</div>
              <div className="dropdown">

@@ -35,6 +35,8 @@ const Login = (props) => {
             const user = userCredential.user;
             // ...
             console.log(user);
+
+            //redundant
             let username;
             const q = query(collection(props.db, "Users"));
             const querySnapshot = await getDocs(q);
@@ -48,11 +50,15 @@ const Login = (props) => {
                     }
                 });
 
+            
+            //username doesn't persist, so using context here is redundant
             dispatch({
                 type: "SET_USER",
                 payload: {
+                    user: user,
                     username: username,
                     uid: user.uid
+                 
                 }
             })
 
