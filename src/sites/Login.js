@@ -1,14 +1,18 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useState, useEffect } from "react";
+import { query, collection, getDocs} from "firebase/firestore";
+import { useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router-dom';
+import { UserContext } from '../context/Context';
 
 
-const Login = () => {
+const Login = (props) => {
 
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory();
+    const contextValue = useContext(UserContext);
+    const { userState, dispatch } = contextValue;
 
     const handleChangeEmail = (e) => {
         setEmail(e.target.value);
@@ -18,25 +22,52 @@ const Login = () => {
         setPassword(e.target.value);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+    
+        e.preventDefault();
+
        
 
-        e.preventDefault();
-        
+        try {
         const auth = getAuth();
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
+        const userCredential = await signInWithEmailAndPassword(auth, email, password)
+        
             const user = userCredential.user;
             // ...
             console.log(user);
+            let username;
+            const q = query(collection(props.db, "Users"));
+            const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                    
+
+                    //loop through documents and get username for the uid
+                    if (doc.data().uid === user.uid) {
+                        username = doc.id;
+                    }
+                });
+
+            dispatch({
+                type: "SET_USER",
+                payload: {
+                    username: username,
+                    uid: user.uid
+                }
+            })
+
+            //test user state after dispatch
+            console.log(userState);
+            
             history.push('/');
-        })
-        .catch((error) => {
+        }
+        
+    
+        catch(error){
             const errorCode = error.code;
             const errorMessage = error.message;
             // ..
-        });
+        };
 
     }
 

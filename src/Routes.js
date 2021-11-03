@@ -1,7 +1,7 @@
 import { BrowserRouter, Switch, Route} from "react-router-dom";
 import Nav from "./components/Nav";
 import Homepage from "./sites/Homepage";
-import UserProfile from "./sites/UserProfile";
+import Profile from "./sites/Profile";
 import Status from "./sites/Status";
 import SignUp from "./sites/SignUp";
 import Login from "./sites/Login";
@@ -55,8 +55,8 @@ const Routes = () => {
                     <Route exact path="/">
                         <Homepage db={db} />
                     </Route>
-                    <Route exact path="/user-profile">
-                        <UserProfile />    
+                    <Route exact path="/profile">
+                        <Profile />    
                     </Route>
                     <Route exact path="/status">
                         <Status />
@@ -68,7 +68,7 @@ const Routes = () => {
                         <Verification />
                     </Route>
                      <Route exact path="/login">
-                        <Login />
+                        <Login db={db} />
                     </Route>
                     
                     

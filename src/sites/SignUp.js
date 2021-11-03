@@ -11,7 +11,7 @@ const SignUp = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    const [usernameExists, setUsernameExists] = useState(false);
+    const [usernameExistsState, setUsernameExistsState] = useState(false);
 
 
 
@@ -47,7 +47,6 @@ const SignUp = (props) => {
                 const user = userCredential.user;
                 // ...
                 console.log(user);
-                setUsernameExists(false);
                 history.push('/Verification');
                 console.log('pushed?');
                 console.log(user.uid);
@@ -69,12 +68,12 @@ const SignUp = (props) => {
                 }
         
         else {
-            setUsernameExists(true);
+            setUsernameExistsState(true);
         }
 
     }
     let errorUsername;
-    if (usernameExists === true) {
+    if (usernameExistsState === true) {
         errorUsername = <div>Username exists</div>
     }
     else errorUsername = null;
