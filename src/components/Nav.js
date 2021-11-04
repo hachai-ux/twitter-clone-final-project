@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import Logout from './Logout';
 
+
 const Nav = () => {
+   
+
+    const usernamePath = `/${username}`;
+
     return (
         <nav>
             <h3>Twitter</h3>
@@ -11,7 +16,7 @@ const Nav = () => {
                 <Link to='/'>Home</Link>
                 </li>
                 <li>
-                <Link to='/profile'>Profile</Link>
+                <Link to={usernamePath}>Profile</Link>
                 </li>
                 <li>
                 <Link to='/signup'>TempSignUp</Link>

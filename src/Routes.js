@@ -55,9 +55,6 @@ const Routes = () => {
                     <Route exact path="/">
                         <Homepage db={db} />
                     </Route>
-                    <Route exact path="/profile">
-                        <Profile />    
-                    </Route>
                     <Route exact path="/status">
                         <Status />
                     </Route>
@@ -70,8 +67,9 @@ const Routes = () => {
                      <Route exact path="/login">
                         <Login db={db} />
                     </Route>
-                    
-                    
+                     <Route exact path="/:profile">
+                        <Profile db={db} />    
+                    </Route>
                 </Switch>
             </div>
        
