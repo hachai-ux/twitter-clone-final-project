@@ -125,7 +125,7 @@ const Routes = () => {
             <div className='content'>
             <Switch>
                     <Route exact path="/">
-                        <Homepage db={db} />
+                        <Homepage user={user} username={username} db={db} />
                     </Route>
                     <Route exact path="/status">
                         <Status />
@@ -139,7 +139,7 @@ const Routes = () => {
                      <Route exact path="/login">
                         <Login db={db} />
                     </Route>
-                     <Route exact path="/:profile">
+                     <Route exact path="/:profilename">
                         <Profile user={user} username={username} db={db} />
                     </Route>
                 </Switch>

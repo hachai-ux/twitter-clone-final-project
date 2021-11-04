@@ -2,43 +2,23 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState, useCallback } from "react";
 import StatusPoster from '../components/StatusPoster';
 import UserStatuses from '../components/UserStatuses';
+import { useParams } from 'react-router-dom';
 
 const Homepage = (props) => {
 
-    const [user, setUser] = useState(null);
+    const { profilename } = useParams();
     const [statusSubmitted, setStatusSubmitted] = useState(null);
 
     const changeStatusSubmitted = useCallback((bool) => {
         setStatusSubmitted(bool);
     },[]);
 
-    useEffect(() => {
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                setUser(user);
-                
     
-                // ...
-            } else {
-                // User is signed out
-                // ...
-                setUser(null);
-                
-            
-            };
-        });
 
-    }, []);
-
-
-  
     
     const LoggedIn = () => {
 
-        if (user && (user.emailVerified === true)) {
+        if (props.user && (props.user.emailVerified === true)) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/firebase.User
           
@@ -47,8 +27,8 @@ const Homepage = (props) => {
             return (
                 
                 <div>
-                    <StatusPoster db={props.db} user={user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted}/>
-                    <UserStatuses db={props.db} user={user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted}/>
+                    <StatusPoster db={props.db} username={props.username} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted}/>
+                    <UserStatuses db={props.db} username={props.username}  user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted}/>
                 </div>
             )
             // ...

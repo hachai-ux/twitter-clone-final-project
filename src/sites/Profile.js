@@ -16,12 +16,12 @@ const Profile = (props) => {
         setStatusSubmitted(bool);
     }, []);
     
-
-
+    console.log(profilename);
+console.log(props.username);
 
     let profileSelection;
     if (props.user && (props.user.emailVerified === true) && profilename === props.username) {      
-             profileSelection =   <UserStatuses db={props.db} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
+        profileSelection = <UserStatuses db={props.db} username={props.username}  user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
     }
     else if (profilename) {
         profileSelection = <ProfileStatuses db={props.db} profilename={profilename} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
@@ -35,7 +35,7 @@ const Profile = (props) => {
 
     return (
         <div className="homepage">
-            <h1>Home</h1>
+            <h1>{profilename}</h1>
             {profileSelection}
             
         </div>
