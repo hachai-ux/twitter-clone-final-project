@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import Logout from './Logout';
 
 
-const Nav = () => {
+const Nav = (props) => {
    
 
-    const usernamePath = `/${username}`;
+
+    const usernamePath = `/${props.username}`;
 
     return (
         <nav>
