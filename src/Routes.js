@@ -55,50 +55,40 @@ const Routes = () => {
     const [username, setUsername] = useState('');
     const [user, setUser] = useState('');
 
-    useEffect(() => {
-
-          
-        const getUsername = async () => {
-
-            const auth = getAuth();
-            const user = auth.currentUser;
-            if (user) {
-
-                const q = query(collection(db, "Users"));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                    
-
-                //loop through documents and get username for the uid
-                if (doc.data().uid === user.uid) {
-                    
-                    setUsername(doc.id);
-                }
-            });
-                
-            };
-            
-
-        
-        };
-        getUsername();
-        
-    },[])
   
     
 
     useEffect(() => {
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
+
+
+            const auth = getAuth();
+            onAuthStateChanged(auth, async (user) => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 setUser(user);
+                console.log(user);
+
                 
+                //get username from user
+                const q = query(collection(db, "Users"));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    
+
+                    //loop through documents and get username for the uid
+                    if (doc.data().uid === user.uid) {
+                    
+                        setUsername(doc.id);
+                        console.log(doc.id);
+                    }
+                });
+                
+            }
     
                 // ...
-            } else {
+             else {
                 // User is signed out
                 // ...
                 setUser(null);
@@ -106,7 +96,26 @@ const Routes = () => {
             
             };
         });
+            
+       
+        
 
+    }, []);
+
+
+    useEffect(() => {
+
+          
+        const getUsername = async () => {
+
+           
+           
+            
+
+        
+        };
+        getUsername();
+        
     }, []);
 
 

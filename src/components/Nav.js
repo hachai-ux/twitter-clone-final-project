@@ -4,7 +4,7 @@ import Logout from './Logout';
 
 const Nav = (props) => {
    
-
+    console.log(props.username);
 
     const usernamePath = `/${props.username}`;
 
