@@ -1,18 +1,21 @@
 import { useState, useEffect, memo, useContext } from 'react';
 import { deleteDoc, query, collection, getDocs } from "firebase/firestore";
 import { UserContext } from '../context/Context';
+import { Link } from 'react-router-dom';
 
 
 const Status = (props) => {
 
     const [dropdownStatus, setDropdownStatus] = useState(false);
-    
+
+    const statusPath = `/${props.profilename}/status/${props.doc.id}`;
+    console.log(statusPath);
 
     //context redundant
-     const contextValue = useContext(UserContext);
+    const contextValue = useContext(UserContext);
     const { userState } = contextValue;
 
-    console.log(userState);
+  
          
     const deleteStatus = async () => {
         console.log(props.doc.ref);
@@ -51,7 +54,9 @@ if (!e.target.matches('.dropbtn')) {
     console.log(props.doc.data());
 
     return (
-        <div>
+
+        <Link to = {statusPath} >
+            <div>
             <div>@{props.profilename}</div>
             <div>{props.doc.data().status}</div>
             <div>{props.doc.data().timestamp.toDate().toString()}</div>
@@ -60,11 +65,9 @@ if (!e.target.matches('.dropbtn')) {
                 <Dropdown />
                   
                 </div>
-            
-         
-       
-           
         </div>
+        </Link>
+        
     )
 }
 

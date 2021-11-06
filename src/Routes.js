@@ -6,6 +6,7 @@ import Status from "./sites/Status";
 import SignUp from "./sites/SignUp";
 import Login from "./sites/Login";
 import Verification from "./sites/Verification";
+import StatusPage from './sites/StatusPage';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { query, collection, getDocs } from 'firebase/firestore';
@@ -141,6 +142,9 @@ const Routes = () => {
                     </Route>
                      <Route exact path="/:profilename">
                         <Profile user={user} username={username} db={db} />
+                    </Route>
+                     <Route exact path="/:profilename/status/:statusid">
+                        <StatusPage db={db}/>
                     </Route>
                 </Switch>
             </div>

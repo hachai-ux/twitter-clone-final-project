@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { collection, serverTimestamp, addDoc} from 'firebase/firestore';
+import { collection, serverTimestamp, addDoc, updateDoc} from 'firebase/firestore';
 
 const StatusPoster = (props) => {
 
@@ -21,8 +21,13 @@ const StatusPoster = (props) => {
             const docRef = await addDoc(collection(props.db, "Tweets", props.user.uid, "Statuses"), {
                 name: props.user.uid,
                             status: status,
-                            timestamp: serverTimestamp(),
+                timestamp: serverTimestamp(),
+                            
                 });
+            
+            await updateDoc(docRef, {
+            docId: docRef.id
+            });
              
             console.log(docRef);
             setStatus('');
