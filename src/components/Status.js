@@ -60,8 +60,8 @@ if (!e.target.matches('.dropbtn')) {
   
    //don't show dropdown if it's not user
     let dropdown;
-    console.log(props.insideProfileStatuses);
-    if (props.insideProfileStatuses === true) {
+ 
+    if (props.isUser === false) {
         console.log('hi');
         dropdown = null;
     }
@@ -77,7 +77,7 @@ if (!e.target.matches('.dropbtn')) {
 
         <Link to = {statusPath} >
             <div>
-            <div>@{props.profilename}</div>
+            <div>@{props.doc.data().username}</div>
             <div>{props.doc.data().status}</div>
             <div>{props.doc.data().timestamp.toDate().toString()}</div>
             {dropdown}

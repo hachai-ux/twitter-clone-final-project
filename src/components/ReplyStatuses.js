@@ -4,7 +4,7 @@ import Status from './Status.js';
 import { nanoid } from 'nanoid';
 
 
-const ProfileStatuses = (props) => {
+const ReplyStatuses = (props) => {
 
     const [querySnapshot, setQuerySnapshot] = useState(null);
     //components should not be stored in state
@@ -12,25 +12,23 @@ const ProfileStatuses = (props) => {
 
     useEffect(() => {
 
+        //get all replies to a status(= all documents of it's subcollection)
         
         const getStatuses = async () => {
 
-            //get uid of username
-            const docRef = doc(props.db, "Users", props.profilename);
-            const docSnap = await getDoc(docRef);
+            console.log(props.statusDoc);
+            if (props.statusDoc) {
+                const newCollectionRef = collection(props.db, `${props.statusDoc.ref.path}/Statuses`);
+            const q = query(newCollectionRef, orderBy("timestamp", 'asc'));
             
-            if (docSnap.exists()) {
-                console.log("Document data:", docSnap.data());
-                const uid = docSnap.data().uid;
-
-                  const q = query(collection(props.db, "Tweets", uid, "Statuses"), where("name", "==", uid), orderBy("timestamp", 'desc'));
-            
+                
+                
             setQuerySnapshot(await getDocs(q));
          
 
             //Start listening to the query.
             //Use listener instead of having to run query again in useEffect
-            onSnapshot(q,{ includeMetadataChanges: true }, function (snapshot) {
+            onSnapshot(q, { includeMetadataChanges: true }, function (snapshot) {
                 const source = snapshot.metadata.hasPendingWrites ? "Local" : "Server";
                 if (source === 'Server') {
         
@@ -39,17 +37,12 @@ const ProfileStatuses = (props) => {
                 }
                
                 
-                
-                
+        
             });
   
-                
-            } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
             }
 
-
+            
             
             
 
@@ -60,14 +53,15 @@ const ProfileStatuses = (props) => {
         return () => { };
    
         
-    }, []);
+    }, [props.statusDoc]);
+
 
     let statuses;
     if (querySnapshot) {
         statuses = querySnapshot.docs.map((doc) => {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
-            return <li key={nanoid()}><Status isUser={false} profilename={props.profilename} db={props.db} doc={doc} /></li>
+            return <li key={nanoid()}><Status isUser={true} profilename={props.profilename} db={props.db} doc={doc} /></li>
                 
         });
     }
@@ -89,4 +83,4 @@ const ProfileStatuses = (props) => {
 
 
 
-export default memo(ProfileStatuses);
+export default memo(ReplyStatuses);

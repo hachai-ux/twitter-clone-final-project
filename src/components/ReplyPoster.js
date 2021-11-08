@@ -24,7 +24,8 @@ const ReplyPoster = (props) => {
             
             const docRef = await addDoc(newCollectionRef, {
                 name: props.user.uid,
-                            status: status,
+                status: status,
+                username: props.username,
                 timestamp: serverTimestamp(),
                             
                 });
