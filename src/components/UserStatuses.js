@@ -21,10 +21,12 @@ const UserStatuses = (props) => {
 
             //Start listening to the query.
             //Use listener instead of having to run query again in useEffect
-            onSnapshot(q, function (snapshot) {
+            //Activated when metadata changes from local to server and the source is server
+            onSnapshot(q, { includeMetadataChanges: true },function (snapshot) {
                 const source = snapshot.metadata.hasPendingWrites ? "Local" : "Server";
+                console.log(source);
                 if (source === 'Server') {
-        
+                    
                 setQuerySnapshot(snapshot);
                  
                 }

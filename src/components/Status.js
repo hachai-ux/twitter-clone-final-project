@@ -17,7 +17,9 @@ const Status = (props) => {
 
   
          
-    const deleteStatus = async () => {
+    const deleteStatus = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         console.log(props.doc.ref);
       
         //delete on docRef not doc
@@ -26,7 +28,9 @@ const Status = (props) => {
 }
 
 
-const showDropdown = () => {
+    const showDropdown = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
     setDropdownStatus(true);
 }
    
@@ -42,7 +46,7 @@ if (!e.target.matches('.dropbtn')) {
         if (dropdownStatus === true) {
             return (
                  <div id="myDropdown" className="dropdown-content">
-                        <button onClick={deleteStatus}>Delete</button>
+                        <button onClick={(e)=>deleteStatus(e)}>Delete</button>
                       
                     </div>
 
@@ -61,7 +65,7 @@ if (!e.target.matches('.dropbtn')) {
             <div>{props.doc.data().status}</div>
             <div>{props.doc.data().timestamp.toDate().toString()}</div>
              <div className="dropdown">
-                <button onClick={showDropdown} className="dropbtn">...</button>
+                <button onClick={(e)=>showDropdown(e)} className="dropbtn">...</button>
                 <Dropdown />
                   
                 </div>
