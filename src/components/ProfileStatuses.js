@@ -66,7 +66,7 @@ const ProfileStatuses = (props) => {
         statuses = querySnapshot.docs.map((doc) => {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
-            return <li key={nanoid()}><Status profilename={props.profilename} db={props.db} doc={doc} /></li>
+            return <li key={nanoid()}><Status insideProfileStatuses={true} profilename={props.profilename} db={props.db} doc={doc} /></li>
                 
         });
     }

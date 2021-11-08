@@ -41,6 +41,8 @@ if (!e.target.matches('.dropbtn')) {
 }
 };
 
+
+
     
     const Dropdown = () => {
         if (dropdownStatus === true) {
@@ -55,7 +57,22 @@ if (!e.target.matches('.dropbtn')) {
         else return null;
     }
 
-    console.log(props.doc.data());
+  
+   //don't show dropdown if it's not user
+    let dropdown;
+    console.log(props.insideProfileStatuses);
+    if (props.insideProfileStatuses === true) {
+        console.log('hi');
+        dropdown = null;
+    }
+    else {
+        console.log('hi');
+        dropdown = <div className="dropdown">
+            <button onClick={(e) => showDropdown(e)} className="dropbtn">...</button>
+            <Dropdown />
+                  
+        </div>
+    }
 
     return (
 
@@ -64,11 +81,7 @@ if (!e.target.matches('.dropbtn')) {
             <div>@{props.profilename}</div>
             <div>{props.doc.data().status}</div>
             <div>{props.doc.data().timestamp.toDate().toString()}</div>
-             <div className="dropdown">
-                <button onClick={(e)=>showDropdown(e)} className="dropbtn">...</button>
-                <Dropdown />
-                  
-                </div>
+            {dropdown}
         </div>
         </Link>
         

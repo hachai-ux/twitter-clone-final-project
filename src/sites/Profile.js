@@ -24,7 +24,7 @@ console.log(props.username);
         profileSelection = <UserStatuses db={props.db} username={props.username}  user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
     }
     else if (profilename) {
-        profileSelection = <ProfileStatuses db={props.db} profilename={profilename} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
+        profileSelection = <ProfileStatuses  db={props.db} profilename={profilename} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
     }
 
     
