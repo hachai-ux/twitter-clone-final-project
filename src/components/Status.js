@@ -8,7 +8,7 @@ const Status = (props) => {
 
     const [dropdownStatus, setDropdownStatus] = useState(false);
 
-    const statusPath = `/${props.profilename}/status/${props.doc.id}`;
+    const statusPath = `/${props.doc.data().username}/status/${props.doc.id}`;
     console.log(statusPath);
 
     //context redundant
@@ -49,7 +49,7 @@ if (!e.target.matches('.dropbtn')) {
             return (
                  <div id="myDropdown" className="dropdown-content">
                         <button onClick={(e)=>deleteStatus(e)}>Delete</button>
-                      
+                
                     </div>
 
             )

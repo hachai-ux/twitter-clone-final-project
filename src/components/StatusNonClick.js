@@ -30,7 +30,7 @@ const StatusNonClick = (props) => {
     if (props.doc) {
         console.log(props.doc);
         showStatus = <div>
-            <div>@{props.profilename}</div>
+            <div>@{props.doc.data().username}</div>
             <div>{props.doc.data().status}</div>
             <div>{props.doc.data().timestamp.toDate().toString()}</div>
             <div className="dropdown">

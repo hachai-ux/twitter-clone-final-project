@@ -141,7 +141,7 @@ const Routes = () => {
                         <Profile user={user} username={username} db={db} />
                     </Route>
                      <Route exact path="/:profilename/status/:statusid">
-                        <StatusPage username={username} user={user} db={db}/>
+                        <StatusPage username={username}user={user} db={db}/>
                     </Route>
                 </Switch>
             </div>

@@ -31,7 +31,7 @@ const StatusPage = (props) => {
        
         getDocument();
 
-    }, []);
+    }, [statusid]);
 
 
    
