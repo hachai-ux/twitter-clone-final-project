@@ -1,7 +1,9 @@
 import { useEffect, useState, memo } from 'react';
 import { collection, query, getDocs, where, orderBy, onSnapshot, doc, getDoc } from 'firebase/firestore';
 import Status from './Status.js';
+import ReplyPoster from './ReplyPoster';
 import { nanoid } from 'nanoid';
+
 
 const ProfileStatuses = (props) => {
 
@@ -78,6 +80,8 @@ const ProfileStatuses = (props) => {
     return (
         <div>
             <ul>{statuses}</ul>
+            <ReplyPoster />
+            
       </div>
         
     )

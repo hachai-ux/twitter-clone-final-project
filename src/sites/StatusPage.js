@@ -1,7 +1,8 @@
 import StatusNonClick from '../components/StatusNonClick';
 import { useLocation, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { collectionGroup, query, getDocs, where, collection} from 'firebase/firestore';
+import { collectionGroup, query, getDocs, where, collection } from 'firebase/firestore';
+import ReplyPoster from '../components/ReplyPoster';
 
 const StatusPage = (props) => {
     
@@ -66,7 +67,11 @@ const StatusPage = (props) => {
     console.log(statusDoc)
 
     return (
-        <StatusNonClick profilename={username} db={props.db} doc={statusDoc} />
+        <div>
+             <StatusNonClick profilename={username} db={props.db} doc={statusDoc} />
+            <ReplyPoster statusDoc={statusDoc} user={props.user} db={props.db}/>
+        </div>
+       
     )
 }
 

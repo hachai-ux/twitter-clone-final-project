@@ -70,7 +70,6 @@ if (!e.target.matches('.dropbtn')) {
         dropdown = <div className="dropdown">
             <button onClick={(e) => showDropdown(e)} className="dropbtn">...</button>
             <Dropdown />
-                  
         </div>
     }
 
