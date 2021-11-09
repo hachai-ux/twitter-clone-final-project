@@ -44,7 +44,6 @@ const StatusPage = (props) => {
             <ReplyPoster statusDoc={statusDoc} username={props.username} user={props.user} db={props.db} />
             <ReplyStatuses statusDoc={statusDoc} db={props.db} />
         </div>
-       
     )
 }
 

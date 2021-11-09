@@ -1,5 +1,5 @@
 import { useState, useEffect, memo, useContext } from 'react';
-import { deleteDoc, query, collection, getDocs } from "firebase/firestore";
+import { deleteDoc} from "firebase/firestore";
 import { UserContext } from '../context/Context';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ const Status = (props) => {
 
     const statusPath = `/${props.doc.data().username}/status/${props.doc.id}`;
     console.log(statusPath);
+    console.log(props.doc.ref.path);
 
     //context redundant
     const contextValue = useContext(UserContext);
@@ -25,32 +26,32 @@ const Status = (props) => {
         //delete on docRef not doc
         await deleteDoc(props.doc.ref);
        
-}
+    }
 
 
     const showDropdown = (e) => {
         e.preventDefault();
         e.stopPropagation();
-    setDropdownStatus(true);
-}
+        setDropdownStatus(true);
+    }
    
     
     window.onclick = function (e) {
-if (!e.target.matches('.dropbtn')) {
-    setDropdownStatus(false);
-}
-};
-
+        if (!e.target.matches('.dropbtn')) {
+            setDropdownStatus(false);
+        }
+    };
+  
 
 
     
     const Dropdown = () => {
         if (dropdownStatus === true) {
             return (
-                 <div id="myDropdown" className="dropdown-content">
-                        <button onClick={(e)=>deleteStatus(e)}>Delete</button>
-                
-                    </div>
+                <div id="myDropdown" className="dropdown-content">
+                    <button onClick={(e) => deleteStatus(e)}>Delete</button>
+
+                </div>
 
             )
         }
@@ -58,7 +59,7 @@ if (!e.target.matches('.dropbtn')) {
     }
 
   
-   //don't show dropdown if it's not user
+    //don't show dropdown if it's not user
     let dropdown;
  
     if (props.isUser === false) {
@@ -73,13 +74,26 @@ if (!e.target.matches('.dropbtn')) {
         </div>
     }
 
+    let replies;
+    if (props.doc.data().count === 0) {
+        replies = null;
+    }
+    else if (props.doc.data().count === 1) {
+        replies = <div>{props.doc.data().count} reply</div>
+    }
+    else if(props.doc.data().count){
+        replies = <div>{props.doc.data().count} replies</div>
+    }
+
+
     return (
 
         <Link to = {statusPath} >
             <div>
             <div>@{props.doc.data().username}</div>
             <div>{props.doc.data().status}</div>
-            <div>{props.doc.data().timestamp.toDate().toString()}</div>
+                <div>{props.doc.data().timestamp.toDate().toString()}</div>
+                {replies}
             {dropdown}
         </div>
         </Link>

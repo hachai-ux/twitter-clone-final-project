@@ -23,6 +23,7 @@ const StatusPoster = (props) => {
                 status: status,
                 username: props.username,
                 timestamp: serverTimestamp(),
+                count: 0
                             
                 });
             

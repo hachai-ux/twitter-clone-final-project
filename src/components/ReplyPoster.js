@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { collection, serverTimestamp, addDoc, updateDoc} from 'firebase/firestore';
+import { collection, serverTimestamp, doc, addDoc, updateDoc, runTransaction} from 'firebase/firestore';
 
 const ReplyPoster = (props) => {
 
@@ -16,25 +16,45 @@ const ReplyPoster = (props) => {
 
         e.preventDefault();
 
+
+
         try {
-            console.log(`${props.statusDoc.ref.path}/Statuses`);
-            const newCollectionRef = collection(props.db, `${props.statusDoc.ref.path}/Statuses`);
-            console.log(newCollectionRef);
-            console.log(props.statusDoc.ref.path);
-            
-            const docRef = await addDoc(newCollectionRef, {
-                name: props.user.uid,
-                status: status,
-                username: props.username,
-                timestamp: serverTimestamp(),
+            await runTransaction(props.db, async (transaction) => {
+                
+                //check if status doc was updated concurrently - transaction only success if it wasnt
+                const statusDoc = await transaction.get(props.statusDoc.ref);
+
+               
+                const newCollectionRef = collection(props.db, `${props.statusDoc.ref.path}/Statuses`);
+              
+                const docRef = doc(newCollectionRef);
+                
+                
+
+                //create new reply
+                await transaction.set(docRef, {
+                    name: props.user.uid,
+                    status: status,
+                    username: props.username,
+                    timestamp: serverTimestamp(),
+                    count: 0,
+                    docuId: docRef.id
                             
                 });
+
+                //calculate new count
+                const newCount = statusDoc.data().count + 1;
+
+                console.log(newCount);
             
-            await updateDoc(docRef, {
-            docId: docRef.id
-            });
+                //update status doc
+                transaction.update(statusDoc.ref, {
+                    count: newCount
+                });
              
-            console.log(docRef);
+                console.log(docRef);
+                
+            });
             
             setStatus('');
             
