@@ -1,5 +1,5 @@
 import { useState, useEffect, memo, useContext } from 'react';
-import { deleteDoc} from "firebase/firestore";
+import { deleteDoc, updateDoc} from "firebase/firestore";
 import { UserContext } from '../context/Context';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 const Status = (props) => {
 
     const [dropdownStatus, setDropdownStatus] = useState(false);
+    
 
     const statusPath = `/${props.doc.data().username}/status/${props.doc.id}`;
     console.log(statusPath);
@@ -22,9 +23,24 @@ const Status = (props) => {
         e.preventDefault();
         e.stopPropagation();
         console.log(props.doc.ref);
-      
-        //delete on docRef not doc
-        await deleteDoc(props.doc.ref);
+
+        //if count is 0, then delete completely
+        if (props.doc.data().count === 0) {
+            await deleteDoc(props.doc.ref);
+
+        }
+        //if count is 1 or more(has replies) then show "This Tweet was deleted" in status
+        //just update status
+        else if (props.doc.data().count > 0) {
+            await updateDoc(props.doc.ref, {
+                status: "This Tweet was deleted.",
+                deleted: true,
+            });
+           
+        }
+        //will run snapshot listener in parent component because status changed
+        
+        
        
     }
 
@@ -85,16 +101,30 @@ const Status = (props) => {
         replies = <div>{props.doc.data().count} replies</div>
     }
 
+    //check if status exists or was deleted
+    let statusContainer;
+    if (!props.doc.data().deleted) {
+        statusContainer = <div>
+            <div>@{props.doc.data().username}</div>
+            <div>{props.doc.data().status}</div>
+                <div>{props.doc.data().timestamp.toDate().toString()}</div>
+            {dropdown}
+             </div>
+    }
+    else if (props.doc.data().deleted === true) {
+        statusContainer = <div>
+            <div>@{props.doc.data().username}</div>
+            <div>{props.doc.data().status}</div>
+                <div>{props.doc.data().timestamp.toDate().toString()}</div>
+             </div>
+    }
 
     return (
 
         <Link to = {statusPath} >
             <div>
-            <div>@{props.doc.data().username}</div>
-            <div>{props.doc.data().status}</div>
-                <div>{props.doc.data().timestamp.toDate().toString()}</div>
+                {statusContainer}
                 {replies}
-            {dropdown}
         </div>
         </Link>
         

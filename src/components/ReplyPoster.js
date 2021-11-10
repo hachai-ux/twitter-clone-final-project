@@ -19,6 +19,7 @@ const ReplyPoster = (props) => {
 
 
         try {
+            //batch creating reply and updating count in a transaction to avoid discrepancies, in case one fails
             await runTransaction(props.db, async (transaction) => {
                 
                 //check if status doc was updated concurrently - transaction only success if it wasnt
@@ -38,7 +39,7 @@ const ReplyPoster = (props) => {
                     username: props.username,
                     timestamp: serverTimestamp(),
                     count: 0,
-                    docuId: docRef.id
+                    docId: docRef.id
                             
                 });
 

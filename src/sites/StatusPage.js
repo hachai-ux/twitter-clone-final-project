@@ -13,6 +13,8 @@ const StatusPage = (props) => {
     const [statusDoc, setStatusDoc] = useState('');
     const [username, setUsername] = useState('');
 
+    console.log(statusid);
+
     useEffect(() => {
 
         const getDocument = async () => {
