@@ -77,7 +77,8 @@ const Status = (props) => {
         try{
             await runTransaction(props.db, async (transaction) => {
                 
-                const retweetUserDocRef = doc(props.db, `${props.doc.ref.path}/Retweets/${props.user.id}`);
+                console.log(props.user);
+                const retweetUserDocRef = doc(props.db, `${props.doc.ref.path}/Retweets/${props.user.uid}`);
                 const retweetUserDoc = await transaction.get(retweetUserDocRef);
 
                 //add retweeter to status and add retweet to user tweets
@@ -97,6 +98,7 @@ const Status = (props) => {
                     //add retweet info to original tweet
                     await transaction.set(retweetUserDocRef, {
                         user: props.username,
+                        userId: props.user.uid,
                         retweetId: retweetDocRef.id
                     });
                    
