@@ -1,5 +1,5 @@
 import { useState, useEffect, memo, useContext } from 'react';
-import { deleteDoc, updateDoc} from "firebase/firestore";
+import { deleteDoc, runTransaction, updateDoc} from "firebase/firestore";
 import { UserContext } from '../context/Context';
 import { Link } from 'react-router-dom';
 
@@ -25,8 +25,26 @@ const Status = (props) => {
         console.log(props.doc.ref);
 
         //if count is 0, then delete completely
-        if (props.doc.data().count === 0) {
-            await deleteDoc(props.doc.ref);
+        console.log(props.doc.ref.parent.parent.parent.id );
+        if (props.doc.data().count === 0 && props.doc.ref.parent.parent.parent.id !== 'Tweets') {
+            try {
+                await runTransaction(props.db, async (transaction) => {
+                    const parentDoc = await transaction.get(props.doc.ref.parent.parent);
+                    console.log(parentDoc)
+                    const newCount = parentDoc.data().count - 1;
+                    
+                    transaction.update(parentDoc.ref, {
+                        count: newCount
+                    });
+                    transaction.delete(props.doc.ref);
+                    
+                
+                })
+            }
+            catch (error){
+                 console.error('Transaction failed', error);
+            }
+           
 
         }
         //if count is 1 or more(has replies) then show "This Tweet was deleted" in status
