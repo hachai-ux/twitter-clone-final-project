@@ -60,9 +60,9 @@ const ReplyStatuses = (props) => {
     if (querySnapshot) {
         statuses = querySnapshot.docs.map((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            
+
             console.log(doc.id, " => ", doc.data());
-            return <li key={nanoid()}><Status isUser={true} profilename={props.profilename} db={props.db} doc={doc} /></li>
+            return <li key={nanoid()}><Status isUser={true} user={props.user} profilename={props.profilename} db={props.db} doc={doc} /></li>
                 
         });
     }

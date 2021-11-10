@@ -1,5 +1,5 @@
 import { useState, useEffect, memo, useContext } from 'react';
-import { deleteDoc, runTransaction, updateDoc} from "firebase/firestore";
+import { doc, deleteDoc, collection, runTransaction, updateDoc} from "firebase/firestore";
 import { UserContext } from '../context/Context';
 import { Link } from 'react-router-dom';
 
@@ -68,6 +68,48 @@ const Status = (props) => {
         e.stopPropagation();
         setDropdownStatus(true);
     }
+
+
+    const retweet = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        try{
+            await runTransaction(props.db, async (transaction) => {
+                
+                const retweetUserDocRef = doc(props.db, `${props.doc.ref.path}/Retweets/${props.user.id}`);
+                const retweetUserDoc = await transaction.get(retweetUserDocRef);
+
+                //add retweeter to status and add retweet to user tweets
+                if (retweetUserDoc.exists() === false) {
+                    const newCollection = collection(props.db, 'Tweets', props.user.uid, 'Statuses')
+                    //auto-generated id
+                    const retweetDocRef = doc(newCollection);
+                    console.log(retweetDocRef.id);
+                    console.log(props.doc.id);
+                    //set new status as retweet
+                    await transaction.set(retweetDocRef, {
+                        docId: retweetDocRef.id,
+                        originalId: props.doc.id,
+                        retweet: true
+
+                    });
+                    //add retweet info to original tweet
+                    await transaction.set(retweetUserDocRef, {
+                        user: props.username,
+                        retweetId: retweetDocRef.id
+                    });
+                   
+                }
+           
+            });
+        }
+        catch (error) {
+            console.error('Failed transaction', error);
+        }
+       
+       
+    }
    
     
     window.onclick = function (e) {
@@ -126,6 +168,7 @@ const Status = (props) => {
             <div>@{props.doc.data().username}</div>
             <div>{props.doc.data().status}</div>
                 <div>{props.doc.data().timestamp.toDate().toString()}</div>
+            <button onClick={(e) => retweet(e)}>Retweet</button>
             {dropdown}
              </div>
     }
