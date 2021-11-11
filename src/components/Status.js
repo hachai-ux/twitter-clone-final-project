@@ -80,14 +80,19 @@ const Status = (props) => {
                 console.log(props.user);
                 const retweetUserDocRef = doc(props.db, `${props.doc.ref.path}/Retweets/${props.user.uid}`);
                 const retweetUserDoc = await transaction.get(retweetUserDocRef);
+                
+                
+                console.log(retweetUserDoc.exists());
 
                 //add retweeter to status and add retweet to user tweets
                 if (retweetUserDoc.exists() === false) {
+                    
                     const newCollection = collection(props.db, 'Tweets', props.user.uid, 'Statuses')
                     //auto-generated id
-                    const retweetDocRef = doc(newCollection);
+                const retweetDocRef = doc(newCollection);
+                    
                     console.log(retweetDocRef.id);
-                    console.log(props.doc.id);
+    
                     //set new status as retweet
                     await transaction.set(retweetDocRef, {
                         docId: retweetDocRef.id,
@@ -102,6 +107,17 @@ const Status = (props) => {
                         retweetId: retweetDocRef.id
                     });
                    
+                }
+                else if (retweetUserDoc.exists() === true) {
+                    //delete retweet docs if clicked on retweet again
+
+                    //get retweet doc by id
+                     console.log(retweetUserDoc);
+                    console.log(retweetUserDoc.data().retweetId);
+                    const retweetDocRef = doc(props.db, 'Tweets', props.user.uid, 'Statuses', retweetUserDoc.data().retweetId);
+                    transaction.delete(retweetDocRef);
+                    transaction.delete(retweetUserDocRef);
+        
                 }
            
             });
