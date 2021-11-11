@@ -44,7 +44,7 @@ const StatusPage = (props) => {
         <div>
             <StatusNonClick profilename={props.username} db={props.db} doc={statusDoc} />
             <ReplyPoster statusDoc={statusDoc} username={props.username} user={props.user} db={props.db} />
-            <ReplyStatuses user={props.user} statusDoc={statusDoc} db={props.db} />
+            <ReplyStatuses username={props.username} user={props.user} statusDoc={statusDoc} db={props.db} />
         </div>
     )
 }
