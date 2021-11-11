@@ -2,12 +2,16 @@ import { useState, useEffect, memo, useContext } from 'react';
 import { query, collectionGroup, where, getDocs, doc, onSnapshot, deleteDoc, collection, runTransaction, updateDoc, serverTimestamp} from "firebase/firestore";
 import { UserContext } from '../context/Context';
 import { Link } from 'react-router-dom';
+import { nanoid } from 'nanoid';
+
 
 
 const Status = (props) => {
 
     const [dropdownStatus, setDropdownStatus] = useState(false);
-    const [retweetSnapshot, setRetweetSnapshot] = useState(null);
+    const [originalDoc, setOriginalDoc] = useState(null);
+    const [isRetweet, setIsRetweet] = useState(false);
+
     
 
     const statusPath = `/${props.doc.data().username}/status/${props.doc.id}`;
@@ -27,23 +31,15 @@ const Status = (props) => {
                         const q = query(collectionGroup(props.db, "Statuses"), where('docId', "==", props.doc.data().originalId));
                         
                 console.log(await getDocs(q));
-                setRetweetSnapshot(await getDocs(q));
-                
+                const retweetDoc = await getDocs(q);
+                retweetDoc.docs.forEach((doc) => {
+                    setOriginalDoc(doc);
+                });
+                setIsRetweet(true);
 
-                //Not necessary?
-                onSnapshot(q, { includeMetadataChanges: true },function (snapshot) {
-                const source = snapshot.metadata.hasPendingWrites ? "Local" : "Server";
-                console.log(source);
-                if (source === 'Server') {
-                    
-                setRetweetSnapshot(snapshot);
-                 
-                }
-               
                 
+            
                 
-                
-            });
             }
             
             
@@ -112,6 +108,8 @@ const Status = (props) => {
         try{
             await runTransaction(props.db, async (transaction) => {
                 
+                if (isRetweet === false) {
+                    //get retweets of current doc
                 console.log(props.user);
                 const retweetUserDocRef = doc(props.db, `${props.doc.ref.path}/Retweets/${props.user.uid}`);
                 const retweetUserDoc = await transaction.get(retweetUserDocRef);
@@ -129,6 +127,7 @@ const Status = (props) => {
                     console.log(retweetDocRef.id);
     
                     //set new status as retweet
+                    //pointer doc
                     await transaction.set(retweetDocRef, {
                         docId: retweetDocRef.id,
                         originalId: props.doc.id,
@@ -157,6 +156,17 @@ const Status = (props) => {
         
                 }
            
+                }
+                else if (isRetweet === true) {
+                    //query original doc with origialId
+                    const retweetUserDocRef = doc(props.db, `${originalDoc.ref.path}/Retweets/${props.user.uid}`);
+                    //delete doc pointer
+                    transaction.delete(props.doc.ref);
+                    //delete retweet information of original doc
+                    transaction.delete(retweetUserDocRef);
+                
+                }
+                
             });
         }
         catch (error) {
@@ -240,17 +250,16 @@ const Status = (props) => {
 
 
     let retweetContainer;
-    console.log(retweetSnapshot);
-    if (retweetSnapshot) {
-        retweetContainer = retweetSnapshot.docs.map((doc) => {
-            return  <div>
-            <div>@{doc.data().username}</div>
-            <div>{doc.data().status}</div>
-                <div>{doc.data().timestamp.toDate().toString()}</div>
+    
+    if (originalDoc) {
+        retweetContainer = <div>
+            <div>@{originalDoc.data().username}</div>
+            <div>{originalDoc.data().status}</div>
+                <div>{originalDoc.data().timestamp.toDate().toString()}</div>
             <button onClick={(e) => retweet(e)}>Retweet</button>
-            
              </div>
-        })
+         
+        
     }
 
     
