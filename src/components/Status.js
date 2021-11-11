@@ -108,7 +108,10 @@ const Status = (props) => {
         try{
             await runTransaction(props.db, async (transaction) => {
                 
-                if (isRetweet === false) {
+                //there needs to be a difference between current user id and original tweet user id
+                //check if user is logged in with props.user
+                console.log(props.user);
+                if (isRetweet === false && props.user) {
                     //get retweets of current doc
                 console.log(props.user);
                 const retweetUserDocRef = doc(props.db, `${props.doc.ref.path}/Retweets/${props.user.uid}`);
@@ -136,6 +139,7 @@ const Status = (props) => {
 
                     });
                     //add retweet info to original tweet
+                    console.log(props.username);
                     await transaction.set(retweetUserDocRef, {
                         user: props.username,
                         userId: props.user.uid,
@@ -157,7 +161,7 @@ const Status = (props) => {
                 }
            
                 }
-                else if (isRetweet === true) {
+                else if (isRetweet === true && props.user) {
                     //query original doc with origialId
                     const retweetUserDocRef = doc(props.db, `${originalDoc.ref.path}/Retweets/${props.user.uid}`);
                     //delete doc pointer

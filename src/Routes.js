@@ -94,7 +94,9 @@ const Routes = () => {
                 setUser(null);
                 
             
-            };
+                };
+                
+                //likely needs cleanup for user
         });
             
        
