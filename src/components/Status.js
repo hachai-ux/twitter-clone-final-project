@@ -1,5 +1,5 @@
 import { useState, useEffect, memo, useContext } from 'react';
-import { doc, deleteDoc, collection, runTransaction, updateDoc} from "firebase/firestore";
+import { query, collectionGroup, where, getDocs, doc, onSnapshot, deleteDoc, collection, runTransaction, updateDoc, serverTimestamp} from "firebase/firestore";
 import { UserContext } from '../context/Context';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 const Status = (props) => {
 
     const [dropdownStatus, setDropdownStatus] = useState(false);
+    const [retweetSnapshot, setRetweetSnapshot] = useState(null);
     
 
     const statusPath = `/${props.doc.data().username}/status/${props.doc.id}`;
@@ -17,6 +18,40 @@ const Status = (props) => {
     const contextValue = useContext(UserContext);
     const { userState } = contextValue;
 
+
+    useEffect(() => {
+
+        const getRetweet = async () => {
+            console.log(props.doc.data().retweet);
+            if (props.doc.data().retweet === true) {
+                        const q = query(collectionGroup(props.db, "Statuses"), where('docId', "==", props.doc.data().originalId));
+                        
+                console.log(await getDocs(q));
+                setRetweetSnapshot(await getDocs(q));
+                
+
+                //Not necessary?
+                onSnapshot(q, { includeMetadataChanges: true },function (snapshot) {
+                const source = snapshot.metadata.hasPendingWrites ? "Local" : "Server";
+                console.log(source);
+                if (source === 'Server') {
+                    
+                setRetweetSnapshot(snapshot);
+                 
+                }
+               
+                
+                
+                
+            });
+            }
+            
+            
+        }
+       
+        getRetweet();
+        return () => { };
+    },[])
   
          
     const deleteStatus = async (e) => {
@@ -97,7 +132,8 @@ const Status = (props) => {
                     await transaction.set(retweetDocRef, {
                         docId: retweetDocRef.id,
                         originalId: props.doc.id,
-                        retweet: true
+                        retweet: true,
+                        timestamp: serverTimestamp()
 
                     });
                     //add retweet info to original tweet
@@ -105,6 +141,7 @@ const Status = (props) => {
                         user: props.username,
                         userId: props.user.uid,
                         retweetId: retweetDocRef.id
+                        
                     });
                    
                 }
@@ -168,6 +205,9 @@ const Status = (props) => {
         </div>
     }
 
+
+  
+
     let replies;
     if (props.doc.data().count === 0) {
         replies = null;
@@ -198,13 +238,42 @@ const Status = (props) => {
              </div>
     }
 
+
+    let retweetContainer;
+    console.log(retweetSnapshot);
+    if (retweetSnapshot) {
+        retweetContainer = retweetSnapshot.docs.map((doc) => {
+            return  <div>
+            <div>@{doc.data().username}</div>
+            <div>{doc.data().status}</div>
+                <div>{doc.data().timestamp.toDate().toString()}</div>
+            <button onClick={(e) => retweet(e)}>Retweet</button>
+            
+             </div>
+        })
+    }
+
+    
+    let statusType;
+    if (!props.doc.data().retweet) {
+        statusType = <div>
+            {statusContainer}
+            {replies}
+        </div>
+    }
+    else if (props.doc.data().retweet === true) {
+        statusType = <div>
+            You retweeted
+             {retweetContainer}
+        </div>
+    }
+
     return (
 
         <Link to = {statusPath} >
             <div>
-                {statusContainer}
-                {replies}
-        </div>
+            {statusType}
+            </div>
         </Link>
         
     )

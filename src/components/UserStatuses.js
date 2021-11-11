@@ -14,7 +14,7 @@ const UserStatuses = (props) => {
         
         const getStatuses = async () => {
             
-            const q = query(collection(props.db, "Tweets", props.user.uid, "Statuses"), where("name", "==", props.user.uid), orderBy("timestamp", 'desc'));
+            const q = query(collection(props.db, "Tweets", props.user.uid, "Statuses"), orderBy("timestamp", 'desc'));
             
             setQuerySnapshot(await getDocs(q));
          
@@ -51,7 +51,8 @@ const UserStatuses = (props) => {
     if (querySnapshot) {
         statuses = querySnapshot.docs.map((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+        
+            console.log(doc.data());
             return <li key={nanoid()}><Status username={props.username} user={props.user} profilename={props.username} db={props.db} doc={doc} /></li>
                 
         });
