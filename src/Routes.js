@@ -129,7 +129,6 @@ const Routes = () => {
                     <Route exact path="/">
                         <Homepage user={user} username={username} db={db} />
                     </Route>
-                   
                     <Route exact path="/signup">
                         <SignUp db={db} />
                     </Route>
