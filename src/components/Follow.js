@@ -22,24 +22,34 @@ const Follow = (props) => {
                              
             //add following to profilename(the followed profile)
                 
-                  await runTransaction(props.db, async (transaction) => {
+                await runTransaction(props.db, async (transaction) => {
                 
-                           const docRefFollowers = transaction.set(doc(props.db, "Users", props.profilename, "Followers", props.username), {
-                uid: props.user.uid,
-                username: props.username,
-                });
+                    const docRefFollowers = transaction.set(doc(props.db, "Users", props.profilename, "Followers", props.username), {
+                        uid: props.user.uid,
+                        username: props.username,
+                    });
 
-                const docRefFollowing = transaction.set(doc(props.db, "Users", props.username, "Following", props.profilename), {
-                uid: props.uid,
-                username: props.profilename,
+                    const docRefFollowing = transaction.set(doc(props.db, "Users", props.username, "Following", props.profilename), {
+                        uid: props.uid,
+                        username: props.profilename,
              
                             
+                    });
                 });
-            })
-                
-           
                 
             }
+            else if (docSnapFollowing.exists()) {
+                //unfollow if already followed
+
+                await runTransaction(props.db, async (transaction) => {
+                
+                    transaction.delete(doc(props.db, "Users", props.profilename, "Followers", props.username));
+                    transaction.delete(doc(props.db, "Users", props.username, "Following", props.profilename));
+             
+                            
+                 
+                });
+            };
             
          
            
