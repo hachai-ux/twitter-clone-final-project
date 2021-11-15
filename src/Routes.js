@@ -52,7 +52,7 @@ ui.start('#firebaseui-auth-container', {
 
 const Routes = () => {
 
-    const [username, setUsername] = useState('');
+    const [username, setUsername] = useState(null);
     const [user, setUser] = useState('');
 
   
@@ -80,6 +80,7 @@ const Routes = () => {
                     //loop through documents and get username for the uid
                     if (doc.data().uid === user.uid) {
                     
+
                         setUsername(doc.id);
                         console.log(doc.id);
                     }
@@ -105,20 +106,6 @@ const Routes = () => {
     }, []);
 
 
-    useEffect(() => {
-
-          
-        const getUsername = async () => {
-
-           
-           
-            
-
-        
-        };
-        getUsername();
-        
-    }, []);
 
 
     return (

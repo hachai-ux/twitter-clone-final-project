@@ -1,8 +1,32 @@
 import { setDoc, doc, getDoc, runTransaction } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
 
 const Follow = (props) => {
 
+    const [docSnapFollowing, setDocSnapFollowing] = useState(null);
+    const [following, setFollowing] = useState(null);
 
+  
+
+
+    useEffect(() => {
+        
+        const checkFollowing = async () => {
+            //check if user is already following the profile
+            if (props.username !== null) {
+                
+                console.log(props.username);
+                const docRefFollowing = doc(props.db, "Users", props.username, "Following", props.profilename);
+                console.log(docRefFollowing);
+                setDocSnapFollowing(await getDoc(docRefFollowing));
+                
+            }
+           
+        }
+        checkFollowing();
+          
+        
+    }, [props.username, following]);
 
     const followUser = async (e) => {
         e.preventDefault();
@@ -13,10 +37,6 @@ const Follow = (props) => {
         //follow
         try {
           
-            //check if user is already following the profile
-
-            const docRefFollowing = doc(props.db, "Users", props.username, 'Following', props.profilename );
-            const docSnapFollowing = await getDoc(docRefFollowing);
             if (!docSnapFollowing.exists()) {
 
                              
@@ -30,12 +50,13 @@ const Follow = (props) => {
                     });
 
                     const docRefFollowing = transaction.set(doc(props.db, "Users", props.username, "Following", props.profilename), {
-                        uid: props.uid,
+                        uid: props.profileSnap.data().uid,
                         username: props.profilename,
              
                             
                     });
                 });
+                setFollowing(true);
                 
             }
             else if (docSnapFollowing.exists()) {
@@ -49,6 +70,7 @@ const Follow = (props) => {
                             
                  
                 });
+                 setFollowing(false);
             };
             
          
@@ -58,6 +80,7 @@ const Follow = (props) => {
             }
 
            
+    
          
         
   catch(error) {
@@ -67,11 +90,26 @@ const Follow = (props) => {
        
      }
        
+    
+    let showButton;
+    if (docSnapFollowing !== null)
+    {
+           if (!docSnapFollowing.exists()) {
+            showButton = <button onClick={(e) => followUser(e)}>Follow</button>
+        }
+
+           else if (docSnapFollowing.exists()) {
+               console.log(docSnapFollowing);
+            showButton = <button onClick={(e) => followUser(e)}>Following</button>
+        }
+        
+    }
+ 
 
 
     return (
         <div>
-            <button onClick={(e) => followUser(e)}>Follow</button>
+            {showButton}
         </div>
     )
 }
