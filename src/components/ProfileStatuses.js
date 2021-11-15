@@ -15,15 +15,9 @@ const ProfileStatuses = (props) => {
         
         const getStatuses = async () => {
 
-            //get uid of username
-            const docRef = doc(props.db, "Users", props.profilename);
-            const docSnap = await getDoc(docRef);
-            
-            if (docSnap.exists()) {
-                console.log("Document data:", docSnap.data());
-                const uid = docSnap.data().uid;
+           
 
-                  const q = query(collection(props.db, "Tweets", uid, "Statuses"), where("name", "==", uid), orderBy("timestamp", 'desc'));
+                  const q = query(collection(props.db, "Tweets", props.uid, "Statuses"), where("name", "==", props.uid), orderBy("timestamp", 'desc'));
             
             setQuerySnapshot(await getDocs(q));
          
@@ -44,10 +38,7 @@ const ProfileStatuses = (props) => {
             });
   
                 
-            } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-            }
+            
 
 
             

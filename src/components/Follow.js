@@ -13,17 +13,13 @@ const Follow = (props) => {
         //follow
         try {
 
+            //check if user is already following the profile
+
             console.log(props.profilename);
             const docRefProfile = doc(props.db, "Users", props.profilename);
             const docSnapProfile = await getDoc(docRefProfile);
             
-            let uid;
-
-            //get uid from profilename
-            if (docSnapProfile.exists()) {
-                console.log("Document data:", docSnapProfile.data());
-                uid = docSnapProfile.data().uid;
-
+         
                         
             //add following to profilename(the followed profile)
                 
@@ -33,7 +29,7 @@ const Follow = (props) => {
                 });
 
                 const docRefFollowing = await setDoc(doc(props.db, "Users", props.username, "Following", props.profilename), {
-                uid: uid,
+                uid: props.uid,
                 username: props.profilename,
              
                             
@@ -43,7 +39,7 @@ const Follow = (props) => {
             }
 
            
-         }
+         
         
   catch(error) {
     console.error('Error writing new document to Firebase Database', error);
