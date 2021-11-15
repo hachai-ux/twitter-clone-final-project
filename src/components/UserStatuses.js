@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 const UserStatuses = (props) => {
 
     const [querySnapshot, setQuerySnapshot] = useState(null);
+    const [followedUsers, setFollowedUsers] = useState(null);
     //components should not be stored in state
 
 
@@ -17,8 +18,6 @@ const UserStatuses = (props) => {
             const q = query(collection(props.db, "Tweets", props.user.uid, "Statuses"), orderBy("timestamp", 'desc'));
             
             setQuerySnapshot(await getDocs(q));
-         
-
             //Start listening to the query.
             //Use listener instead of having to run query again in useEffect
             //Activated when metadata changes from local to server and the source is server
@@ -27,16 +26,14 @@ const UserStatuses = (props) => {
                 console.log(source);
                 if (source === 'Server') {
                     
-                setQuerySnapshot(snapshot);
+                    setQuerySnapshot(snapshot);
                  
                 }
-               
-                
                 
                 
             });
-  
-            
+
+
 
         };
         
@@ -46,6 +43,37 @@ const UserStatuses = (props) => {
    
         
     }, []);
+
+    useEffect(() => {
+
+        const getFollowedStatuses = async () => {
+            
+            console.log(props.username);
+            if (props.username !== null) {
+                 const qFollowing = query(collection(props.db, "Users", props.username, "Following"));
+                const qFollowingSnapshot = await getDocs(qFollowing);
+                console.log(qFollowingSnapshot)
+            setFollowedUsers(qFollowingSnapshot.docs.map((doc) => {
+                return doc.data().uid;
+            }));
+
+                
+           }
+          
+                
+            };
+
+        
+            //get "following" user list and run query for every followed profile
+
+        
+        getFollowedStatuses();
+
+        console.log(followedUsers);
+        
+        return () => { };
+        
+    }, [props.username]);
 
     let statuses;
     if (querySnapshot) {
