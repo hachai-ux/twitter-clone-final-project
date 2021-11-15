@@ -1,4 +1,4 @@
-import { setDoc, doc, getDoc } from 'firebase/firestore';
+import { setDoc, doc, getDoc, runTransaction } from 'firebase/firestore';
 
 const Follow = (props) => {
 
@@ -12,28 +12,37 @@ const Follow = (props) => {
 
         //follow
         try {
-
+          
             //check if user is already following the profile
 
-            console.log(props.profilename);
-            const docRefProfile = doc(props.db, "Users", props.profilename);
-            const docSnapProfile = await getDoc(docRefProfile);
-            
-         
-                        
+            const docRefFollowing = doc(props.db, "Users", props.username, 'Following', props.profilename );
+            const docSnapFollowing = await getDoc(docRefFollowing);
+            if (!docSnapFollowing.exists()) {
+
+                             
             //add following to profilename(the followed profile)
                 
-                const docRefFollowers = await setDoc(doc(props.db, "Users", props.profilename, "Followers", props.username), {
+                  await runTransaction(props.db, async (transaction) => {
+                
+                           const docRefFollowers = transaction.set(doc(props.db, "Users", props.profilename, "Followers", props.username), {
                 uid: props.user.uid,
                 username: props.username,
                 });
 
-                const docRefFollowing = await setDoc(doc(props.db, "Users", props.username, "Following", props.profilename), {
+                const docRefFollowing = transaction.set(doc(props.db, "Users", props.username, "Following", props.profilename), {
                 uid: props.uid,
                 username: props.profilename,
              
                             
                 });
+            })
+                
+           
+                
+            }
+            
+         
+           
             
 
             }
