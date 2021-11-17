@@ -52,10 +52,12 @@ const Status = (props) => {
         e.stopPropagation();
     
 
+
         //if count is 0, then delete completely
      
         if (props.doc.data().count === 0 && props.doc.ref.parent.parent.parent.id !== 'Tweets') {
             try {
+                console.log('delete 2')
                 await runTransaction(props.db, async (transaction) => {
                     const parentDoc = await transaction.get(props.doc.ref.parent.parent);
               
@@ -64,6 +66,7 @@ const Status = (props) => {
                     transaction.update(parentDoc.ref, {
                         count: newCount
                     });
+                    console.log(props.doc.ref);
                     transaction.delete(props.doc.ref);
                     
                 
@@ -74,6 +77,9 @@ const Status = (props) => {
             }
            
 
+        }
+        else if (props.doc.data().count === 0) {
+            await deleteDoc(props.doc.ref);
         }
         //if count is 1 or more(has replies) then show "This Tweet was deleted" in status
         //just update status
