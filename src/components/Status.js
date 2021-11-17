@@ -15,8 +15,6 @@ const Status = (props) => {
 
 
     const statusPath = `/${props.doc.data().username}/status/${props.doc.id}`;
-    console.log(statusPath);
-    console.log(props.doc.ref.path);
 
     //context redundant
     const contextValue = useContext(UserContext);
@@ -26,11 +24,10 @@ const Status = (props) => {
     useEffect(() => {
 
         const getRetweet = async () => {
-            console.log(props.doc.data().retweet);
+
             if (props.doc.data().retweet === true) {
                         const q = query(collectionGroup(props.db, "Statuses"), where('docId', "==", props.doc.data().originalId));
-                        
-                console.log(await getDocs(q));
+            
                 const retweetDoc = await getDocs(q);
                 retweetDoc.docs.forEach((doc) => {
                     setOriginalDoc(doc);
@@ -53,15 +50,15 @@ const Status = (props) => {
     const deleteStatus = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log(props.doc.ref);
+    
 
         //if count is 0, then delete completely
-        console.log(props.doc.ref.parent.parent.parent.id );
+     
         if (props.doc.data().count === 0 && props.doc.ref.parent.parent.parent.id !== 'Tweets') {
             try {
                 await runTransaction(props.db, async (transaction) => {
                     const parentDoc = await transaction.get(props.doc.ref.parent.parent);
-                    console.log(parentDoc)
+              
                     const newCount = parentDoc.data().count - 1;
                     
                     transaction.update(parentDoc.ref, {
@@ -110,15 +107,15 @@ const Status = (props) => {
                 
                 //there needs to be a difference between current user id and original tweet user id
                 //check if user is logged in with props.user
-                console.log(props.user);
+         
                 if (isRetweet === false && props.user) {
                     //get retweets of current doc
-                console.log(props.user);
+         
                 const retweetUserDocRef = doc(props.db, `${props.doc.ref.path}/Retweets/${props.user.uid}`);
                 const retweetUserDoc = await transaction.get(retweetUserDocRef);
                 
                 
-                console.log(retweetUserDoc.exists());
+             
 
                 //add retweeter to status and add retweet to user tweets
                 if (retweetUserDoc.exists() === false) {
@@ -127,7 +124,7 @@ const Status = (props) => {
                     //auto-generated id
                 const retweetDocRef = doc(newCollection);
                     
-                    console.log(retweetDocRef.id);
+             
     
                     //set new status as retweet
                     //pointer doc
@@ -139,7 +136,7 @@ const Status = (props) => {
 
                     });
                     //add retweet info to original tweet
-                    console.log(props.username);
+ 
                     await transaction.set(retweetUserDocRef, {
                         user: props.username,
                         userId: props.user.uid,
@@ -152,8 +149,7 @@ const Status = (props) => {
                     //delete retweet docs if clicked on retweet again
 
                     //get retweet doc by id
-                     console.log(retweetUserDoc);
-                    console.log(retweetUserDoc.data().retweetId);
+            
                     const retweetDocRef = doc(props.db, 'Tweets', props.user.uid, 'Statuses', retweetUserDoc.data().retweetId);
                     transaction.delete(retweetDocRef);
                     transaction.delete(retweetUserDocRef);
@@ -208,11 +204,11 @@ const Status = (props) => {
     let dropdown;
  
     if (props.isUser === false) {
-        console.log('hi');
+
         dropdown = null;
     }
     else {
-        console.log('hi');
+  
         dropdown = <div className="dropdown">
             <button onClick={(e) => showDropdown(e)} className="dropbtn">...</button>
             <Dropdown />

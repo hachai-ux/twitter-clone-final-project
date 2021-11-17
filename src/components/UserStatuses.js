@@ -8,6 +8,8 @@ const UserStatuses = (props) => {
     const [statusSnapshots, setStatusSnapshots] = useState([]);
     const [feedData, setFeedData] = useState([]);
     let uids = [props.user.uid];
+ 
+                
 
     useEffect(() => {
 
@@ -54,6 +56,11 @@ const UserStatuses = (props) => {
 
     useEffect(() => {
 
+        //can use helper to check if username is loaded
+
+           let batches = [];
+           let sortedBatches = [];
+
         console.log(props.username);
 
         const getFollowedIds = async () => {
@@ -72,10 +79,9 @@ const UserStatuses = (props) => {
           
                 
         const getFeed = async () => {
-            let batches = [];
-                let sortedBatches = [];
+            
             if (props.username !== null) {
-                
+               
                  //get feed of all followed ids
                 
             while (uids.length) {
@@ -96,17 +102,26 @@ const UserStatuses = (props) => {
                 //Use listener instead of having to run query again in useEffect
                 //Activated when metadata changes from local to server and the source is server
                 // eslint-disable-next-line no-loop-func
+               
+            
+                // eslint-disable-next-line no-loop-func
                 onSnapshot(q, { includeMetadataChanges: true }, function (snapshot) {
                     console.log('on snapshot');
                     const source = snapshot.metadata.hasPendingWrites ? "Local" : "Server";
                     console.log(source);
                     if (source === 'Server') {
                         console.log('on snapshot 2');
+                        console.log(snapshot);
                         snapshot.docChanges().forEach((change) => {
+                            console.log(change);
                             if (change.type === "added") {
-                        console.log('on snapshot 3');
-                                const newFeedData = sortedBatches.concat(change.doc);
-                                const newSortedFeedData = newFeedData.sort((a, b) => b.data().timestamp - a.data().timestamp)
+                                console.log('on snapshot 3');
+                                //sortedBatches unsafe reference to variable, but works here    
+                                //bug(?): why does index changes for add
+                                sortedBatches = sortedBatches.concat(change.doc);
+                                console.log(sortedBatches);
+                              
+                                const newSortedFeedData = sortedBatches.sort((a, b) => b.data().timestamp - a.data().timestamp)
                                 console.log(newSortedFeedData);
                                 setFeedData(newSortedFeedData);
                             }
@@ -127,6 +142,7 @@ const UserStatuses = (props) => {
                     
                     
                 });
+                
                 
             }
 
@@ -151,15 +167,15 @@ const UserStatuses = (props) => {
         
         return () => { };
         
-    }, [props.username, feedData]);
+    }, [props.username]);
 
     let statuses;
+ 
     console.log(feedData);
     if (feedData.length > 0) {
         statuses = feedData.map((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc);
-            console.log(doc.data());
+           
             return <li key={nanoid()}><Status username={props.username} user={props.user} profilename={doc.data().username} db={props.db} doc={doc} /></li>
                 
         });
