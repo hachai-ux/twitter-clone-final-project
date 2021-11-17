@@ -26,7 +26,7 @@ const ReplyPoster = (props) => {
                 const statusDoc = await transaction.get(props.statusDoc.ref);
 
                
-                const newCollectionRef = collection(props.db, `${props.statusDoc.ref.path}/Statuses`);
+                const newCollectionRef = collection(props.db, `${props.statusDoc.ref.path}/Replies`);
               
                 const docRef = doc(newCollectionRef);
                 
@@ -34,7 +34,7 @@ const ReplyPoster = (props) => {
 
                 //create new reply
                 await transaction.set(docRef, {
-                    name: props.user.uid,
+                    uid: props.user.uid,
                     status: status,
                     username: props.username,
                     timestamp: serverTimestamp(),

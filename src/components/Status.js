@@ -12,7 +12,7 @@ const Status = (props) => {
     const [originalDoc, setOriginalDoc] = useState(null);
     const [isRetweet, setIsRetweet] = useState(false);
 
-    
+
 
     const statusPath = `/${props.doc.data().username}/status/${props.doc.id}`;
     console.log(statusPath);

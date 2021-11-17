@@ -18,7 +18,7 @@ const ReplyStatuses = (props) => {
 
             console.log(props.statusDoc);
             if (props.statusDoc) {
-                const newCollectionRef = collection(props.db, `${props.statusDoc.ref.path}/Statuses`);
+                const newCollectionRef = collection(props.db, `${props.statusDoc.ref.path}/Replies`);
             const q = query(newCollectionRef, orderBy("timestamp", 'asc'));
             
                 

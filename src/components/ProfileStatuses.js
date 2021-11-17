@@ -17,7 +17,7 @@ const ProfileStatuses = (props) => {
 
            
 
-                  const q = query(collection(props.db, "Tweets", props.profileSnap.data().uid, "Statuses"), where("name", "==", props.profileSnap.data().uid), orderBy("timestamp", 'desc'));
+                  const q = query(collection(props.db, "Tweets", props.profileSnap.data().uid, "Statuses"), where("uid", "==", props.profileSnap.data().uid), orderBy("timestamp", 'desc'));
             
             setQuerySnapshot(await getDocs(q));
          

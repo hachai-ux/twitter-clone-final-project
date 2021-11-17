@@ -19,7 +19,7 @@ const StatusPoster = (props) => {
         try {
         
             const docRef = await addDoc(collection(props.db, "Tweets", props.user.uid, "Statuses"), {
-                name: props.user.uid,
+                uid: props.user.uid,
                 status: status,
                 username: props.username,
                 timestamp: serverTimestamp(),
