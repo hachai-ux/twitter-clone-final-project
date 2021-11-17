@@ -11,10 +11,10 @@ const Status = (props) => {
     const [dropdownStatus, setDropdownStatus] = useState(false);
     const [originalDoc, setOriginalDoc] = useState(null);
     const [isRetweet, setIsRetweet] = useState(false);
+    const [statusPath, setStatusPath] = useState(`/${props.doc.data().username}/status/${props.doc.id}`);
 
 
-
-    const statusPath = `/${props.doc.data().username}/status/${props.doc.id}`;
+  
 
     //context redundant
     const contextValue = useContext(UserContext);
@@ -31,7 +31,9 @@ const Status = (props) => {
                 const retweetDoc = await getDocs(q);
                 retweetDoc.docs.forEach((doc) => {
                     setOriginalDoc(doc);
+                        setStatusPath(`/${doc.data().username}/status/${doc.id}`);
                 });
+            
                 setIsRetweet(true);
 
                 

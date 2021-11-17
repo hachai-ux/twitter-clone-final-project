@@ -113,6 +113,7 @@ const UserStatuses = (props) => {
                     if (source === 'Server') {
                         console.log('on snapshot 2');
                         console.log(snapshot);
+                        console.log(snapshot.docChanges());
                         snapshot.docChanges().forEach((change) => {
                             console.log(change);
                             if (change.type === "added") {
