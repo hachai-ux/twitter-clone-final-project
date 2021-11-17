@@ -132,7 +132,8 @@ const Status = (props) => {
                         docId: retweetDocRef.id,
                         originalId: props.doc.id,
                         retweet: true,
-                        timestamp: serverTimestamp()
+                        timestamp: serverTimestamp(),
+                        uid: props.user.uid
 
                     });
                     //add retweet info to original tweet

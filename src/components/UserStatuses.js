@@ -104,6 +104,7 @@ const UserStatuses = (props) => {
                 // eslint-disable-next-line no-loop-func
                
             
+                //onSnapshot callback gets called once initially
                 // eslint-disable-next-line no-loop-func
                 onSnapshot(q, { includeMetadataChanges: true }, function (snapshot) {
                     console.log('on snapshot');
@@ -130,8 +131,10 @@ const UserStatuses = (props) => {
                                    console.log('on snapshot 4');
                                 console.log("Removed city: ", change.doc.data());
  
-                                const newFeedData = sortedBatches.filter(doc => doc.data().docId !== change.doc.data().docId);
-                                setFeedData(newFeedData);
+                                //delete normal tweets or retweets
+                                sortedBatches = sortedBatches.filter(doc => doc.data().docId !== change.doc.data().docId);
+                                
+                                setFeedData(sortedBatches);
                                     
                             };
                         
@@ -145,11 +148,6 @@ const UserStatuses = (props) => {
                 
                 
             }
-
-                    //sort everything by timestamp
-                    sortedBatches = batches.sort((a, b) => b.data().timestamp - a.data().timestamp)
-                console.log(sortedBatches);
-                    setFeedData(sortedBatches);
 
             }
            
