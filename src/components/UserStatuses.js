@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import { collection, collectionGroup, query, getDocs, where, orderBy, onSnapshot } from 'firebase/firestore';
 import Status from './Status.js';
 import { nanoid } from 'nanoid';
@@ -7,7 +7,7 @@ const UserStatuses = (props) => {
 
     const [statusSnapshots, setStatusSnapshots] = useState([]);
     const [feedData, setFeedData] = useState([]);
-    let uids = [props.user.uid];
+    const uids = useRef([]);
  
                 
 
@@ -64,13 +64,27 @@ const UserStatuses = (props) => {
         console.log(props.username);
 
         const getFollowedIds = async () => {
+
+            
             
             console.log(props.username);
             if (props.username !== null) {
+
+                uids.current = uids.current.concat(props.user.uid);
+                 console.log(uids.current);
                 const qFollowing = query(collection(props.db, "Users", props.username, "Following"));
                 const qFollowingSnapshot = await getDocs(qFollowing);
+                console.log(qFollowingSnapshot)
                 qFollowingSnapshot.docs.forEach((doc) => {
-                    uids.concat(doc.data().uid);
+                    
+                    console.log(uids.current);
+                    //check if already exists in uids ref
+                    if (uids.current.indexOf(doc.data().uid) === -1) {
+                         uids.current = uids.current.concat(doc.data().uid);
+                    }
+                      console.log(uids.current);
+                   
+                    
                     //const q = query(collection(props.db, "Tweets", uid, "Statuses"), orderBy("timestamp", 'desc'));
                 }
                 )
@@ -84,12 +98,15 @@ const UserStatuses = (props) => {
                
                  //get feed of all followed ids
                 
-            while (uids.length) {
+            while (uids.current.length) {
                 //firestore limits batches to 10
                 //removes elements from uids and assigns it to batch
-                const batch = uids.splice(0, 10)
+                const batch = uids.current.splice(0, 10);
                 
                 const q = query(collectionGroup(props.db, 'Statuses'), where('uid', 'in', [...batch]))
+
+                console.log(batch);
+                //redundant
                 const qSnapshot = await getDocs(q);
                 console.log(qSnapshot);
                 const qSnapshotArray = qSnapshot.docs.map((doc) => {
@@ -158,9 +175,12 @@ const UserStatuses = (props) => {
         
     
         
-         
-        getFollowedIds();
-        getFeed();
+        //both need to run one after another not concurrently
+        (async () => {
+            await getFollowedIds();
+            await getFeed();
+        })();
+        
 
    
         
