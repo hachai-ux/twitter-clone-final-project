@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, memo } from 'react';
-import { collection, collectionGroup, query, getDocs, where, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, collectionGroup, query, getDocs, where, orderBy, onSnapshot, onSnapshotsInSync } from 'firebase/firestore';
 import Status from './Status.js';
 import { nanoid } from 'nanoid';
 
@@ -15,6 +15,7 @@ const UserStatuses = (props) => {
 
  
         //old
+        /*
         const getStatuses = async () => {
             
             const q = query(collection(props.db, "Tweets", props.user.uid, "Statuses"), orderBy("timestamp", 'desc'));
@@ -44,10 +45,11 @@ const UserStatuses = (props) => {
 
 
         };
+
         
         //getStatuses();
 
-     
+     */
         
         return () => { };
    
@@ -107,6 +109,7 @@ const UserStatuses = (props) => {
 
                 console.log(batch);
                 //redundant
+                /*
                 const qSnapshot = await getDocs(q);
                 console.log(qSnapshot);
                 const qSnapshotArray = qSnapshot.docs.map((doc) => {
@@ -114,6 +117,7 @@ const UserStatuses = (props) => {
                 });
                 batches.push(...qSnapshotArray)
                 console.log(qSnapshotArray);
+                */
 
                 //Start listening to the query.
                 //Use listener instead of having to run query again in useEffect
@@ -123,25 +127,40 @@ const UserStatuses = (props) => {
             
                 //onSnapshot callback gets called once initially
                 // eslint-disable-next-line no-loop-func
-                onSnapshot(q, { includeMetadataChanges: true }, function (snapshot) {
+                const unsubscribe = onSnapshot(q, { includeMetadataChanges: true }, function (snapshot) {
                     console.log('on snapshot');
                     const source = snapshot.metadata.hasPendingWrites ? "Local" : "Server";
                     console.log(source);
+                    
                     if (source === 'Server') {
                         console.log('on snapshot 2');
                         console.log(snapshot);
+                        //can't figure out bug, why docChanges doesn't recognize when document is added to database
                         console.log(snapshot.docChanges());
+                        
+                        if (snapshot.docChanges().length === 0) {
+                            //filter for the doc that doesn't exist
+                            const addedDoc = snapshot.docs.filter((snapshotDoc) => !sortedBatches.some((sortedBatchDoc) => snapshotDoc.data().docId === sortedBatchDoc.data().docId));
+                            //add it to sortedBatches
+                            console.log(addedDoc);
+                            sortedBatches = sortedBatches.concat(addedDoc);
+                            const newSortedFeedData = sortedBatches.sort((a, b) => b.data().timestamp - a.data().timestamp)
+                            console.log('docchanges is empty')
+                            
+                            setFeedData(newSortedFeedData);
+                        }
+                        
                         snapshot.docChanges().forEach((change) => {
                             console.log(change);
                             if (change.type === "added") {
                                 console.log('on snapshot 3');
                                 //sortedBatches unsafe reference to variable, but works here    
-                                //bug(?): why does index changes for add
+                              
                                 sortedBatches = sortedBatches.concat(change.doc);
-                                console.log(sortedBatches);
+                                
                               
                                 const newSortedFeedData = sortedBatches.sort((a, b) => b.data().timestamp - a.data().timestamp)
-                                console.log(newSortedFeedData);
+                              
                                 setFeedData(newSortedFeedData);
                             }
                             //check if already exists
