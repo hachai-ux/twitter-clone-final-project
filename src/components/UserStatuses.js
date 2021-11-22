@@ -209,7 +209,7 @@ const UserStatuses = (props) => {
 
     let statuses;
  
-    console.log(feedData);
+   
     if (feedData.length > 0) {
         statuses = feedData.map((doc) => {
             // doc.data() is never undefined for query doc snapshots

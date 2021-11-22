@@ -212,7 +212,7 @@ const Status = (props) => {
     //don't show dropdown if it's not user
     let dropdown;
  
-    if (props.isUser === false) {
+    if (props.username !== props.profilename) {
 
         dropdown = null;
     }
