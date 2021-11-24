@@ -59,7 +59,9 @@ const SignUp = (props) => {
                     transaction.set(doc(props.db, 'Users', username), {
                         uid: user.uid,
                         random: random,
-                        username: username
+                        username: username,
+                        following: {},
+                        followers: {}
                     })
 
                     //user always follow himself
