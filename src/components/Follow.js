@@ -1,4 +1,4 @@
-import { setDoc, doc, getDoc, runTransaction } from 'firebase/firestore';
+import { setDoc, doc, getDoc, runTransaction, deleteField } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 
 const Follow = (props) => {
@@ -16,9 +16,21 @@ const Follow = (props) => {
             if (props.username !== null) {
                 
                 console.log(props.username);
-                const docRefFollowing = doc(props.db, "Users", props.username, "Following", props.profilename);
+                const docRefFollowing = doc(props.db, "Users", props.username);
                 console.log(docRefFollowing);
-                setDocSnapFollowing(await getDoc(docRefFollowing));
+                const docFollowing = await getDoc(docRefFollowing);
+                if (docFollowing.data().following) {
+                    console.log(docSnapFollowing);
+                    if (docFollowing.data().following.hasOwnProperty(props.profilename)) {
+                        
+                       
+                    }
+                    
+                 
+                }
+                   setDocSnapFollowing(docFollowing);
+
+                
                 
             }
            
@@ -37,21 +49,27 @@ const Follow = (props) => {
         //follow
         try {
           
-            if (!docSnapFollowing.exists()) {
+            if (!docSnapFollowing.data().following.hasOwnProperty(props.profilename)) {
 
                              
             //add following to profilename(the followed profile)
                 
                 await runTransaction(props.db, async (transaction) => {
                 
-                    const docRefFollowers = transaction.set(doc(props.db, "Users", props.profilename, "Followers", props.username), {
-                        uid: props.user.uid,
-                        username: props.username,
+                    //Followers
+                    const docRefFollowers = transaction.update(doc(props.db, "Users", props.profilename), {
+                      
+                        followers: {
+                             [`${props.username}`]: props.user.uid
+                        }
+                      
                     });
-
-                    const docRefFollowing = transaction.set(doc(props.db, "Users", props.username, "Following", props.profilename), {
-                        uid: props.profileSnap.data().uid,
-                        username: props.profilename,
+                    //Following
+                    const docRefFollowing = transaction.update(doc(props.db, "Users", props.username), {
+                       
+                        following: {
+                        [`${props.profilename}`]: props.profileSnap.data().uid
+                    }
              
                             
                     });
@@ -59,13 +77,13 @@ const Follow = (props) => {
                 setFollowing(true);
                 
             }
-            else if (docSnapFollowing.exists()) {
+            else if (docSnapFollowing.data().following.hasOwnProperty(props.profilename)) {
                 //unfollow if already followed
 
                 await runTransaction(props.db, async (transaction) => {
                 
-                    transaction.delete(doc(props.db, "Users", props.profilename, "Followers", props.username));
-                    transaction.delete(doc(props.db, "Users", props.username, "Following", props.profilename));
+                    transaction.update(doc(props.db, "Users", props.profilename), {[`followers.${props.username}`]: deleteField()});
+                    transaction.update(doc(props.db, "Users", props.username), { [`following.${props.profilename}`]: deleteField()});
              
                             
                  
@@ -94,16 +112,17 @@ const Follow = (props) => {
     let showButton;
     if (docSnapFollowing !== null)
     {
-           if (!docSnapFollowing.exists()) {
+           if (!docSnapFollowing.data().following.hasOwnProperty(props.profilename)) {
             showButton = <button onClick={(e) => followUser(e)}>Follow</button>
         }
 
-           else if (docSnapFollowing.exists()) {
+           else if (docSnapFollowing.data().following.hasOwnProperty(props.profilename)) {
                console.log(docSnapFollowing);
             showButton = <button onClick={(e) => followUser(e)}>Following</button>
         }
         
     }
+    else showButton = <button onClick={(e) => followUser(e)}>Follow</button>
  
 
 

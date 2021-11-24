@@ -1,7 +1,7 @@
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
-import { getDocs, collection, doc, setDoc} from "firebase/firestore";
+import { getDocs, collection, doc, setDoc, runTransaction} from "firebase/firestore";
 
 
 
@@ -50,9 +50,33 @@ const SignUp = (props) => {
                 history.push('/Verification');
                 console.log('pushed?');
                 console.log(user.uid);
+                const random = Math.random();
                 //set username, but without checking for email validation(better to set username after email validation)
-                await setDoc(doc(props.db, "Users", username), {
-                    uid: user.uid
+              
+
+                await runTransaction(props.db, async (transaction) => {
+                
+                    transaction.set(doc(props.db, 'Users', username), {
+                        uid: user.uid,
+                        random: random,
+                        username: username
+                    })
+
+                    //user always follow himself
+                    /*
+                    const docRefFollowers = transaction.set(doc(props.db, "Users", props.username, "Followers", props.username), {
+                        uid: user.uid,
+                        username: props.username,
+                      
+                    });
+
+                    const docRefFollowing = transaction.set(doc(props.db, "Users", props.username, "Following", props.username), {
+                        uid: user.uid,
+                        username: props.username,
+             
+                            
+                    });
+                    */
                 });
         
                 await sendEmailVerification(auth.currentUser);

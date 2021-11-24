@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import StatusPoster from '../components/StatusPoster';
 import UserStatuses from '../components/UserStatuses';
 import { useParams } from 'react-router-dom';
+import ProfileSuggestions from '../components/ProfileSuggestions';
 
 const Homepage = (props) => {
 
@@ -28,7 +29,8 @@ const Homepage = (props) => {
                 
                 <div>
                     <StatusPoster db={props.db} username={props.username} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted}/>
-                    <UserStatuses db={props.db} username={props.username}  user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted}/>
+                    <UserStatuses db={props.db} username={props.username} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
+                    <ProfileSuggestions db={props.db} username={props.username} user={props.user} />
                 </div>
             )
             // ...

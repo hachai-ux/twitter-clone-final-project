@@ -8,7 +8,7 @@ import Verification from "./sites/Verification";
 import StatusPage from './sites/StatusPage';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { query, collection, getDocs } from 'firebase/firestore';
+import { query, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 
