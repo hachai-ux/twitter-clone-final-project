@@ -1,26 +1,27 @@
 # Twitter Clone
 
-Features:
-
-Sign up/Login
-Posting Tweets
-Deleting Tweets
-Retweeting
-Replying to Tweets
-Tweets as threads
-Following Profiles
-Home Feed
-User Profiles
-Who to Follow
-
-What I learned:
-Firebase Database Structure
-Firebase Transactions
-Various querying methods
-React Router Dom
-React Memo
-etc.
-
+<br />
+Features:<br />
+<br />
+Sign up/Login<br />
+Posting Tweets<br />
+Deleting Tweets<br />
+Retweeting<br />
+Replying to Tweets<br />
+Tweets as threads<br />
+Following Profiles<br />
+Home Feed<br />
+User Profiles<br />
+Who to Follow<br />
+<br />
+What I learned:<br />
+Firebase Database Structure<br />
+Firebase Transactions<br />
+Various querying methods<br />
+React Router Dom<br />
+React Memo<br />
+etc.<br />
+<br />
 Used Context API and reducers to set username globally, but turned out redundant, because it doesn't persist on site refresh.
-
-[Live Demo](https://twitter-clone-16a7c.web.app)
+<br />
+[Live Demo](https://twitter-clone-16a7c.web.app)<br />
