@@ -20,10 +20,10 @@ const Nav = (props) => {
                 <Link to={usernamePath}>Profile</Link>
                 </li>
                 <li>
-                <Link to='/signup'>TempSignUp</Link>
+                <Link to='/signup'>SignUp</Link>
                 </li>
                 <li>
-                <Link to='/login'>TempLogin</Link>
+                <Link to='/login'>Login</Link>
                 </li>
                 <li>
                     <Logout />

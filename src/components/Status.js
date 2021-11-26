@@ -12,6 +12,7 @@ const Status = (props) => {
     const [originalDoc, setOriginalDoc] = useState(null);
     const [isRetweet, setIsRetweet] = useState(false);
     const [statusPath, setStatusPath] = useState(`/${props.doc.data().username}/status/${props.doc.id}`);
+  
 
 
   
@@ -35,6 +36,7 @@ const Status = (props) => {
                 });
             
                 setIsRetweet(true);
+
 
                 
             
@@ -111,7 +113,7 @@ const Status = (props) => {
         e.stopPropagation();
 
         try{
-            await runTransaction(props.db, async (transaction) => {
+            const retweetStatusTr = await runTransaction(props.db, async (transaction) => {
                 
                 //there needs to be a difference between current user id and original tweet user id
                 //check if user is logged in with props.user
@@ -152,6 +154,8 @@ const Status = (props) => {
                         retweetId: retweetDocRef.id
                         
                     });
+
+                    return true;
                    
                 }
                 else if (retweetUserDoc.exists() === true) {
@@ -163,6 +167,7 @@ const Status = (props) => {
                     transaction.delete(retweetDocRef);
                     transaction.delete(retweetUserDocRef);
         
+                    return false;
                 }
            
                 }
@@ -173,10 +178,15 @@ const Status = (props) => {
                     transaction.delete(props.doc.ref);
                     //delete retweet information of original doc
                     transaction.delete(retweetUserDocRef);
+                    
+                    return false;
                 
                 }
+
+
                 
             });
+            
         }
         catch (error) {
             console.error('Failed transaction', error);
@@ -261,6 +271,8 @@ const Status = (props) => {
 
 
     let retweetContainer;
+
+   
     
     if (originalDoc) {
         retweetContainer = <div>
