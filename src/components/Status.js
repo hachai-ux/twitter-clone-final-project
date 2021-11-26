@@ -239,10 +239,12 @@ const Status = (props) => {
     }
 
     //check if status exists or was deleted
+    const usernamePath = `/${props.username}`;
     let statusContainer;
     if (!props.doc.data().deleted) {
         statusContainer = <div>
-            <div>@{props.doc.data().username}</div>
+        
+            <div><Link to={usernamePath}>@{props.doc.data().username}</Link></div>
             <div>{props.doc.data().status}</div>
                 <div>{props.doc.data().timestamp.toDate().toString()}</div>
             <button onClick={(e) => retweet(e)}>Retweet</button>
@@ -251,7 +253,7 @@ const Status = (props) => {
     }
     else if (props.doc.data().deleted === true) {
         statusContainer = <div>
-            <div>@{props.doc.data().username}</div>
+            <div><Link to={usernamePath}>@{props.doc.data().username}</Link></div>
             <div>{props.doc.data().status}</div>
                 <div>{props.doc.data().timestamp.toDate().toString()}</div>
              </div>
@@ -262,7 +264,7 @@ const Status = (props) => {
     
     if (originalDoc) {
         retweetContainer = <div>
-            <div>@{originalDoc.data().username}</div>
+            <div><Link to={usernamePath}>@{originalDoc.data().username}</Link></div>
             <div>{originalDoc.data().status}</div>
                 <div>{originalDoc.data().timestamp.toDate().toString()}</div>
             <button onClick={(e) => retweet(e)}>Retweet</button>
@@ -288,7 +290,7 @@ const Status = (props) => {
 
     return (
 
-        <Link to = {statusPath} >
+        <Link to = {statusPath} style={{ textDecoration: 'none' }}>
             <div>
             {statusType}
             </div>
