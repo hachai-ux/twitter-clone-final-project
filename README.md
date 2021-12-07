@@ -24,4 +24,5 @@ etc.<br />
 <br />
 Used Context API and reducers to set username globally, but turned out redundant, because it doesn't persist on site refresh.
 <br />
-[Live Demo](https://twitter-clone-16a7c.web.app)<br />
+
+[Live Demo](https://twitter-clone-16a7c.web.app)

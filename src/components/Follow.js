@@ -69,7 +69,7 @@ const Follow = (props) => {
                        
                         following: {
                         [`${props.profilename}`]: props.profileSnap.data().uid
-                    }
+                    }   
              
                             
                     });
