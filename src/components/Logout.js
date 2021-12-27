@@ -1,5 +1,7 @@
 import { useState} from 'react';
 import { getAuth, signOut } from "firebase/auth";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsisH} from '@fortawesome/free-solid-svg-icons'
 
 const Logout = (props) => {
 
@@ -22,13 +24,16 @@ const Logout = (props) => {
        
 }
 
-const showDropdown = () => {
-    setDropdownStatus(true);
+    const showDropdown = (e) => {
+      
+        e.stopPropagation();
+        setDropdownStatus(true);
+        
 }
    
     
     window.onclick = function (e) {
-if (!e.target.matches('.dropbtn')) {
+if (!e.target.matches('.dropdown') && !e.target.matches('.dropbtn')) {
     setDropdownStatus(false);
 }
 };
@@ -55,9 +60,10 @@ if (!e.target.matches('.dropbtn')) {
 
     return (
         <div>
-           
-             <div className="dropdown">
-                <button onClick={showDropdown} className="dropbtn"></button>
+    
+            <div  className="dropdown">
+                <FontAwesomeIcon
+                    onClick={showDropdown} className="dropbtn" icon={faEllipsisH} />
                 <Dropdown />
                   
                 </div>

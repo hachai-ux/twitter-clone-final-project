@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import Logout from './Logout';
+import twitterCloneLogo from '../content/Twitter-Emblem.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome, faUser} from '@fortawesome/free-solid-svg-icons'
 
 
 const Nav = (props) => {
@@ -10,14 +13,21 @@ const Nav = (props) => {
 
     return (
         <nav>
-            <h3>Twitter</h3>
+           
     
-                <ul className="nav-links">
+            <ul className="nav-links">
                 <li>
-                <Link to='/'>Home</Link>
+                    
+                <Link to='/'><img src={twitterCloneLogo} alt="Twitter Clone Logo" width="26" height="26"></img></Link>
                 </li>
                 <li>
-                <Link to={usernamePath}>Profile</Link>
+                <Link to='/'><FontAwesomeIcon icon={faHome} /></Link>
+                </li>
+                <li>
+                <Link to={usernamePath}><FontAwesomeIcon icon={faUser} /></Link>
+                </li>
+                         <li>
+                    <Logout />
                 </li>
                 <li>
                 <Link to='/signup'>SignUp</Link>
@@ -25,9 +35,7 @@ const Nav = (props) => {
                 <li>
                 <Link to='/login'>Login</Link>
                 </li>
-                <li>
-                    <Logout />
-                </li>
+       
                 
             </ul>
 
