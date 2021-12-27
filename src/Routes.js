@@ -109,6 +109,7 @@ const Routes = () => {
 
 
     return (
+        <div className="container">
         <BrowserRouter>
             <Nav username={username}/>
             <div className='content'>
@@ -135,7 +136,8 @@ const Routes = () => {
             </div>
        
            
-        </BrowserRouter>
+            </BrowserRouter>
+            </div>
     )
 }
 
