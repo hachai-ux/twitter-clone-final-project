@@ -93,7 +93,8 @@ h2 {
   background-color: rgba(0, 0, 0, 0.5);
 }
 .signup-form,
-.login-form {
+.login-form,
+.verification-form {
   border-radius: 22px;
   position: fixed;
   width: 600px;
@@ -110,7 +111,8 @@ h2 {
 }
 
 .signup-form .form-top,
-.login-form .form-top {
+.login-form .form-top,
+.verification-form .form-top {
   margin-bottom: 22px;
 }
 
@@ -145,7 +147,8 @@ h2 {
 }
 
 .signup-form h1,
-.login-form h1 {
+.login-form h1,
+.verification-form h1 {
   font-size: 23px;
   margin-bottom: 22px;
 }
@@ -155,9 +158,6 @@ h2 {
 }
 
 /* Main Content */
-
-.container {
-}
 
 .container nav {
   display: flex;
@@ -189,14 +189,9 @@ h2 {
 .nav-links {
   padding: 8px 8px 8px 8px;
   list-style: none;
-  box-sizing: border-box;
 }
 
-.nav-links .nav-logo {
-  background: white;
-}
-
-.nav-links img {
+. .nav-links img {
   margin: 5px 0;
 }
 

@@ -2,11 +2,13 @@ import logo from "../content/Twitter-Emblem.png";
 import { useState } from 'react';
 import SignUp from "./SignUp";
 import Login from "./Login";
+import Verification from "./Verification";
 
 const LandingPage = (props) => {
 
     const [signupIsOpen, setSignupIsOpen] = useState(false);
     const [loginIsOpen, setLoginIsOpen] = useState(false);
+    const [verificationIsOpen, setVerificationIsOpen] = useState(false);
 
     const openSignup = () => {
         setSignupIsOpen(true);
@@ -16,22 +18,34 @@ const LandingPage = (props) => {
         setLoginIsOpen(true);
     }
 
+    const openVerification = () => {
+        setVerificationIsOpen(true);
+    }
+
     const closeSignup = () => {
          setSignupIsOpen(false);
     }
 
      const closeLogin = () => {
          setLoginIsOpen(false);
+     }
+    
+    const closeVerification = () => {
+         setVerificationIsOpen(false);
     }
+
 
     
     let form;
     if (signupIsOpen === true && loginIsOpen === false) {
-        form = <SignUp closeSignup={closeSignup} db={props.db} />
+        form = <SignUp openVerification={openVerification} closeSignup={closeSignup} db={props.db} />
     }
     else if (signupIsOpen === false && loginIsOpen === true) {
        form = <Login closeLogin={closeLogin} db={props.db} /> 
     }
+    else if (verificationIsOpen === true && signupIsOpen === false) {
+         form = <Verification closeVerification={closeVerification}/> 
+        }
     else form = null;
     
     

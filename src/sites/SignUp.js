@@ -54,7 +54,7 @@ const SignUp = (props) => {
                 const user = userCredential.user;
                 // ...
                 console.log(user);
-                 history.push('/verification');
+                //history.push('/verification');
                 console.log('pushed?');
                 console.log(user.uid);
                 const random = Math.random();
@@ -86,11 +86,17 @@ const SignUp = (props) => {
                             
                     });
                     */
+                     
                 });
         
                 await sendEmailVerification(auth.currentUser);
+                console.log("Reached test")
                 auth.signOut();
-               
+                props.openVerification();
+                 console.log("Reached test2")
+                closeForm();
+                console.log("Reached end")
+           
             }
         
             catch(error){
