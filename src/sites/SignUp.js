@@ -1,7 +1,9 @@
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom';
-import { getDocs, collection, doc, setDoc, runTransaction} from "firebase/firestore";
+import { getDocs, collection, doc, setDoc, runTransaction } from "firebase/firestore";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -16,6 +18,10 @@ const SignUp = (props) => {
 
 
     const history = useHistory();
+
+    const closeForm = (e) => {
+        e.stopPropagation();
+    }
 
     const handleChangeEmail = (e) => {
         setEmail(e.target.value);
@@ -106,28 +112,32 @@ const SignUp = (props) => {
   
 
     return (
-        <form onSubmit={(e) => { handleSubmit(e) }}>
-            <h1>Sign up</h1>
+        <div className="outer-overlay">
+            <form className="signup-form" onSubmit={(e) => { handleSubmit(e) }}>
+                <div className="form-top">
+                    <FontAwesomeIcon onClick={closeForm} className="closeButton" icon={faTimes} />
+                </div>
+                <h1>Sign up</h1>
 
-            <label htmlFor='username'>
-            Username*:
-            <input type="text" value={username} name="username" onChange={(e) => { handleChangeUsername(e)}}  required/>
-            </label>
+                <label htmlFor='username'>
+                Username*:
+                <input type="text" value={username} name="username" onChange={(e) => { handleChangeUsername(e)}}  required/>
+                </label>
 
-            {errorUsername}
+                {errorUsername}
 
-            <label htmlFor='email'>
-            E-mail*:
-            <input type="email" value={email} name="email" onChange={(e) => { handleChangeEmail(e)}}  required/>
-            </label>
-            
-            <label htmlFor='password'>
-                Password*:
-            <input type="password" value={password} name="password" onChange={(e) => { handleChangePassword(e)}} required/>
-        </label>
-        <input type="submit" value="Sign up" />
+                <label htmlFor='email'>
+                E-mail*:
+                <input type="email" value={email} name="email" onChange={(e) => { handleChangeEmail(e)}}  required/>
+                </label>
+                
+                <label htmlFor='password'>
+                    Password*:
+                <input type="password" value={password} name="password" onChange={(e) => { handleChangePassword(e)}} required/>
+                </label>
+                <input type="submit" value="Sign up" />
         </form>
-        
+        </div>
     );
 };
 
