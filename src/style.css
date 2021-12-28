@@ -1,4 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2 {
+  font-family: TwitterChirpExtendedHeavy, Verdana, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  font-size: 64px;
+}
+h2 {
+  font-size: 32px;
+}
 /* Landing Page */
+.landing-page {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.landing-content {
+  flex: 6;
+  margin: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.landing-content h1 {
+  margin-bottom: 33px;
+}
+.landing-content h2 {
+  margin-bottom: 22px;
+}
+
+.landing-content .btn {
+  border: 0 solid black;
+  border-radius: 50px;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 1);
+  display: inline;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  padding: 10px;
+  width: 300px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 11px;
+  cursor: pointer;
+}
+
+.landing-content .signup-btn {
+  background: black;
+  color: white;
+}
+
+.landing-content .login-btn {
+  background: white;
+  color: black;
+  border: 1px solid gray;
+}
+
+.landing-background {
+  background: black;
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* Main Content */
 
