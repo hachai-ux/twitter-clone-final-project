@@ -109,7 +109,19 @@ const Routes = () => {
 
     const Greeting = () => {
         if (user === null) {
-            return <LandingPage db={db} />;
+            return <BrowserRouter>
+          
+            <Switch>
+                    <Route exact path="/">
+                         <LandingPage db={db} />
+                    </Route>
+                    <Route exact path="/verification">
+                        <Verification />
+                    </Route>
+                </Switch>
+           
+           
+            </BrowserRouter>
         }
         else return (
             <div className="container">
