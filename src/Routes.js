@@ -4,7 +4,6 @@ import Homepage from "./sites/Homepage";
 import Profile from "./sites/Profile";
 import SignUp from "./sites/SignUp";
 import Login from "./sites/Login";
-import Verification from "./sites/Verification";
 import StatusPage from './sites/StatusPage';
 import LandingPage from './sites/LandingPage';
 
@@ -55,14 +54,76 @@ const Routes = () => {
 
     const [username, setUsername] = useState(null);
     const [user, setUser] = useState(null);
+    const [newUserCreated, setNewUserCreated] = useState(false);
 
   
+    console.log(username);
+    console.log(user);
+
+    const changeNewUserCreatedStatus = () => {
+        setNewUserCreated(true);
+    }
+
+    useEffect(() => {
+
+        //get username when new user is automatically logged in from signup
+
+        const auth = getAuth();
+        const userCurrent = auth.currentUser;
+
+        console.log(userCurrent);
+
+        const getUsername = async () => {
+            if (userCurrent) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                setUser(userCurrent);
+                console.log(user);
+
+                
+                //get username from user
+                const q = query(collection(db, "Users"));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    
+
+                    //loop through documents and get username for the uid
+                    if (doc.data().uid === userCurrent.uid) {
+                    
+
+                        setUsername(doc.id);
+                        console.log(doc.id);
+                    }
+                });
+                
+            }
     
+                // ...
+             else {
+                // User is signed out
+                // ...
+                setUser(null);
+                
+            
+                };
+                
+                //likely needs cleanup for user
+      
+       
+        
+        }
+            
+        getUsername();
+
+    }, [newUserCreated]);
+   
 
     useEffect(() => {
 
 
-            const auth = getAuth();
+        const auth = getAuth();
+        
             onAuthStateChanged(auth, async (user) => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
@@ -111,49 +172,48 @@ const Routes = () => {
         if (user === null) {
             return <BrowserRouter>
           
-            <Switch>
+                <Switch>
                     <Route exact path="/">
-                         <LandingPage db={db} />
+                        <LandingPage db={db} changeNewUserCreatedStatus={changeNewUserCreatedStatus} />
                     </Route>
-                    <Route exact path="/verification">
-                        <Verification />
-                    </Route>
+                   
                 </Switch>
            
            
             </BrowserRouter>
         }
-        else return (
-            <div className="container">
-        <BrowserRouter>
-            <Nav username={username}/>
-            <div className='content'>
-            <Switch>
-                    <Route exact path="/">
-                        <Homepage user={user} username={username} db={db} />
-                    </Route>
-                    <Route exact path="/signup">
-                        <SignUp db={db} />
-                    </Route>
-                    <Route exact path="/verification">
-                        <Verification />
-                    </Route>
-                     <Route exact path="/login">
-                        <Login db={db} />
-                    </Route>
-                     <Route exact path="/:profilename">
-                        <Profile user={user} username={username} db={db} />
-                    </Route>
-                     <Route exact path="/:profilename/status/:statusid">
-                        <StatusPage username={username} user={user} db={db}/>
-                    </Route>
-                </Switch>
-            </div>
+        else if (username !== null) {
+            return (
+                <div className="container">
+                    <BrowserRouter>
+                        <Nav username={username} />
+                        <div className='content'>
+                            <Switch>
+                                <Route exact path="/">
+                                    <Homepage user={user} username={username} db={db} />
+                                </Route>
+                                <Route exact path="/signup">
+                                    <SignUp db={db} />
+                                </Route>
+                   
+                                <Route exact path="/login">
+                                    <Login db={db} />
+                                </Route>
+                                <Route exact path="/:profilename">
+                                    <Profile user={user} username={username} db={db} />
+                                </Route>
+                                <Route exact path="/:profilename/status/:statusid">
+                                    <StatusPage username={username} user={user} db={db} />
+                                </Route>
+                            </Switch>
+                        </div>
        
            
-            </BrowserRouter>
-            </div>
-        )
+                    </BrowserRouter>
+                </div>
+            )
+        }
+        else return null;
     }
 
 

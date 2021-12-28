@@ -35,7 +35,7 @@ const Profile = (props) => {
     let statusSelection;
     console.log(profileSnap); 
     if (profileSnap !== null) {
-        if (props.user && (props.user.emailVerified === true) && profilename === props.username) {
+        if (props.user  && profilename === props.username) {
             statusSelection = <UserStatuses db={props.db} username={props.username} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
         }
         else if (profilename && profileSnap.exists()) {
@@ -48,7 +48,7 @@ const Profile = (props) => {
     let showFollow;
     if (profileSnap !== null) {
 
-         if (props.user && (props.user.emailVerified === true) && profilename === props.username) {
+         if (props.user  && profilename === props.username) {
         showFollow = null;
     }
          else if (profilename && profileSnap.exists() && props.user) {

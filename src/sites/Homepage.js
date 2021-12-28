@@ -19,7 +19,7 @@ const Homepage = (props) => {
     
     const LoggedIn = () => {
 
-        if (props.user && (props.user.emailVerified === true)) {
+        if (props.user) {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/firebase.User
           

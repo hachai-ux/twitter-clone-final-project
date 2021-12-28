@@ -88,14 +88,13 @@ const SignUp = (props) => {
                     */
                      
                 });
+
+                props.changeNewUserCreatedStatus();
         
                 await sendEmailVerification(auth.currentUser);
-                console.log("Reached test")
-                auth.signOut();
-                props.openVerification();
-                 console.log("Reached test2")
+    
                 closeForm();
-                console.log("Reached end")
+               
            
             }
         
