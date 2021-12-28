@@ -16,26 +16,22 @@ const Nav = (props) => {
            
     
             <ul className="nav-links">
-                <li>
-                    
-                <Link to='/'><img src={twitterCloneLogo} alt="Twitter Clone Logo" width="26" height="26"></img></Link>
+                <li >
+                    <Link to='/'><img src={twitterCloneLogo} alt="Twitter Clone Logo" width="26" height="26"></img>
+                    </Link>
                 </li>
                 <li>
-                <Link to='/'><FontAwesomeIcon icon={faHome} /></Link>
+                    <Link to='/'><FontAwesomeIcon icon={faHome} />
+                    </Link>
                 </li>
                 <li>
-                <Link to={usernamePath}><FontAwesomeIcon icon={faUser} /></Link>
+                    <Link to={usernamePath}><FontAwesomeIcon icon={faUser} />
+                    </Link>
                 </li>
                          <li>
                     <Logout />
                 </li>
-                <li>
-                <Link to='/signup'>SignUp</Link>
-                </li>
-                <li>
-                <Link to='/login'>Login</Link>
-                </li>
-       
+               
                 
             </ul>
 

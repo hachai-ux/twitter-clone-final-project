@@ -3,6 +3,8 @@ import { query, collection, getDocs} from "firebase/firestore";
 import { useState, useEffect, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../context/Context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 
 const Login = (props) => {
@@ -14,6 +16,12 @@ const Login = (props) => {
     const contextValue = useContext(UserContext);
     const { userState, dispatch } = contextValue;
 
+
+       const closeForm = (e) => {
+        e.stopPropagation();
+        props.closeLogin();
+       }
+    
     const handleChangeEmail = (e) => {
         setEmail(e.target.value);
     }
@@ -80,19 +88,26 @@ const Login = (props) => {
   
 
     return (
-        <form onSubmit={(e) => { handleSubmit(e) }}>
-            <h1>Log in</h1>
-            <label htmlFor='email'>
-            E-mail:
-            <input type="email" value={email} name="email" onChange={(e) => { handleChangeEmail(e) }}  required/>
-            </label>
-            
-            <label htmlFor='password'>
-                Password:
-            <input type="password" value={password} name="password" onChange={(e) => { handleChangePassword(e) }} required/>
-        </label>
-        <input type="submit" value="Log in" />
-        </form>
+
+        <div className="outer-overlay">
+            <form className="login-form" onSubmit={(e) => { handleSubmit(e) }}>
+                <div className="form-top">
+                    <FontAwesomeIcon onClick={closeForm} className="closeButton" icon={faTimes} />
+                    </div>
+                <h1>Log in to Twitter Clone</h1>
+                <label htmlFor='email'>
+               
+                <input type="email" value={email} placeholder="E-Mail" name="email" onChange={(e) => { handleChangeEmail(e) }}  required/>
+                </label>
+                
+                <label htmlFor='password'>
+                    Password:
+                <input type="password" value={password} placeholder="Password" name="password" onChange={(e) => { handleChangePassword(e) }} required/>
+                </label>
+                    <input className="login-btn" type="submit" value="Log in" />
+                    
+            </form>
+        </div>
         
     );
 };

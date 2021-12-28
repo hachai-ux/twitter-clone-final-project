@@ -16,13 +16,21 @@ const LandingPage = (props) => {
         setLoginIsOpen(true);
     }
 
+    const closeSignup = () => {
+         setSignupIsOpen(false);
+    }
+
+     const closeLogin = () => {
+         setLoginIsOpen(false);
+    }
+
     
     let form;
     if (signupIsOpen === true && loginIsOpen === false) {
-    form = <SignUp db={props.db} />
+        form = <SignUp closeSignup={closeSignup} db={props.db} />
     }
     else if (signupIsOpen === false && loginIsOpen === true) {
-       form = <Login db={props.db} /> 
+       form = <Login closeLogin={closeLogin} db={props.db} /> 
     }
     else form = null;
     
@@ -38,8 +46,8 @@ const LandingPage = (props) => {
             <div className="landing-content">
             <h1>Join Twitter's Alter-Ego</h1>
             <h2>Register for Twitter Clone.</h2>
-                <button onClick={openSignup} className="btn signup-btn"><span>Signup</span></button>
-                <button onClick={openLogin} className="btn login-btn"><span>Login</span></button>
+                <button onClick={openSignup} className="btn signup-btn"><span>Sign Up</span></button>
+                <button onClick={openLogin} className="btn login-btn"><span>Log In</span></button>
             </div>
             {form}
             

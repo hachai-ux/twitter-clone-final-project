@@ -80,6 +80,7 @@ h2 {
   justify-content: center;
 }
 
+/* Can't click outside form */
 .outer-overlay {
   position: fixed;
   width: 100%;
@@ -91,7 +92,8 @@ h2 {
   margin: auto;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.signup-form {
+.signup-form,
+.login-form {
   border-radius: 22px;
   position: fixed;
   width: 600px;
@@ -103,6 +105,49 @@ h2 {
   transform: translate(-50%, -50%);
   background: white;
   padding: 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form .form-top,
+.login-form .form-top {
+  margin-bottom: 22px;
+}
+
+.signup-form input,
+.login-form input {
+  width: 100%;
+  padding: 12px 8px 8px;
+  box-sizing: border-box;
+  margin-bottom: 11px;
+}
+
+.signup-form .register-btn,
+.login-form .login-btn {
+  width: 100%;
+  margin: 11px 0px;
+  border: 0 solid black;
+  border-radius: 50px;
+  box-sizing: border-box;
+  color: white;
+  background: black;
+  display: inline;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  padding: 10px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 11px;
+  cursor: pointer;
+}
+
+.signup-form h1,
+.login-form h1 {
+  font-size: 23px;
+  margin-bottom: 22px;
 }
 
 .closeButton {
@@ -115,8 +160,10 @@ h2 {
 }
 
 .container nav {
+  display: flex;
+  flex-direction: column;
   height: 100%; /* 100% Full-height */
-  width: 60px; /* 0 width - change this with JavaScript */
+  width: 50px; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
   top: 0;
@@ -133,6 +180,7 @@ h2 {
   justify-content: center;
   align-items: center;
 }
+
 .content {
   z-index: 0;
   margin-left: 60px;
@@ -141,6 +189,15 @@ h2 {
 .nav-links {
   padding: 8px 8px 8px 8px;
   list-style: none;
+  box-sizing: border-box;
+}
+
+.nav-links .nav-logo {
+  background: white;
+}
+
+.nav-links img {
+  margin: 5px 0;
 }
 
 .nav-links > li > a {

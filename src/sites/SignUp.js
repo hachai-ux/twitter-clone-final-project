@@ -21,6 +21,7 @@ const SignUp = (props) => {
 
     const closeForm = (e) => {
         e.stopPropagation();
+        props.closeSignup();
     }
 
     const handleChangeEmail = (e) => {
@@ -117,25 +118,24 @@ const SignUp = (props) => {
                 <div className="form-top">
                     <FontAwesomeIcon onClick={closeForm} className="closeButton" icon={faTimes} />
                 </div>
-                <h1>Sign up</h1>
+                <h1>Create Account</h1>
 
                 <label htmlFor='username'>
-                Username*:
-                <input type="text" value={username} name="username" onChange={(e) => { handleChangeUsername(e)}}  required/>
+                <input type="text" value={username} name="username" placeholder="Name" onChange={(e) => { handleChangeUsername(e)}}  required/>
                 </label>
 
                 {errorUsername}
 
                 <label htmlFor='email'>
-                E-mail*:
-                <input type="email" value={email} name="email" onChange={(e) => { handleChangeEmail(e)}}  required/>
+                
+                <input type="email" value={email} name="email" placeholder="E-Mail" onChange={(e) => { handleChangeEmail(e)}}  required/>
                 </label>
                 
                 <label htmlFor='password'>
-                    Password*:
-                <input type="password" value={password} name="password" onChange={(e) => { handleChangePassword(e)}} required/>
+                  
+                <input type="password" value={password} name="password" placeholder="Password" onChange={(e) => { handleChangePassword(e)}} required/>
                 </label>
-                <input type="submit" value="Sign up" />
+                <input className="register-btn" type="submit" value="Register" />
         </form>
         </div>
     );
