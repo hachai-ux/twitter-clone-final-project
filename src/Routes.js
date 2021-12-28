@@ -6,6 +6,7 @@ import SignUp from "./sites/SignUp";
 import Login from "./sites/Login";
 import Verification from "./sites/Verification";
 import StatusPage from './sites/StatusPage';
+import LandingPage from './sites/LandingPage';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { query, collection, getDocs, connectFirestoreEmulator } from 'firebase/firestore';
@@ -53,7 +54,7 @@ ui.start('#firebaseui-auth-container', {
 const Routes = () => {
 
     const [username, setUsername] = useState(null);
-    const [user, setUser] = useState('');
+    const [user, setUser] = useState(null);
 
   
     
@@ -106,10 +107,12 @@ const Routes = () => {
     }, []);
 
 
-
-
-    return (
-        <div className="container">
+    const Greeting = () => {
+        if (user === null) {
+            return <LandingPage db={db} />;
+        }
+        else return (
+            <div className="container">
         <BrowserRouter>
             <Nav username={username}/>
             <div className='content'>
@@ -138,6 +141,14 @@ const Routes = () => {
            
             </BrowserRouter>
             </div>
+        )
+    }
+
+
+
+
+    return (
+        <Greeting/>
     )
 }
 
