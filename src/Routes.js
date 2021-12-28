@@ -155,6 +155,7 @@ const Routes = () => {
                 // User is signed out
                 // ...
                 setUser(null);
+                console.log('User set to null');
                 
             
                 };
@@ -168,28 +169,25 @@ const Routes = () => {
     }, []);
 
 
-    const Greeting = () => {
-        if (user === null) {
-            return <BrowserRouter>
-          
-                <Switch>
-                    <Route exact path="/">
-                        <LandingPage db={db} changeNewUserCreatedStatus={changeNewUserCreatedStatus} />
-                    </Route>
-                   
-                </Switch>
-           
-           
-            </BrowserRouter>
-        }
-        else if (username !== null) {
-            return (
-                <div className="container">
+  
+     
+    
+
+
+
+
+    return (
+        <div className="container">
                     <BrowserRouter>
-                        <Nav username={username} />
-                        <div className='content'>
+                        
+                        
                             <Switch>
                                 <Route exact path="/">
+                                    <LandingPage db={db} changeNewUserCreatedStatus={changeNewUserCreatedStatus} />
+                    </Route>
+                    <Nav username={username} />
+                    <div className='content'>
+                                <Route exact path="/home">
                                     <Homepage user={user} username={username} db={db} />
                                 </Route>
                                 <Route exact path="/signup">
@@ -204,23 +202,14 @@ const Routes = () => {
                                 </Route>
                                 <Route exact path="/:profilename/status/:statusid">
                                     <StatusPage username={username} user={user} db={db} />
-                                </Route>
-                            </Switch>
+                        </Route>
                         </div>
+                            </Switch>
+                        
        
            
                     </BrowserRouter>
                 </div>
-            )
-        }
-        else return null;
-    }
-
-
-
-
-    return (
-        <Greeting/>
     )
 }
 

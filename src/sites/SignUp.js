@@ -54,7 +54,7 @@ const SignUp = (props) => {
                 const user = userCredential.user;
                 // ...
                 console.log(user);
-                //history.push('/verification');
+                history.push('/home');
                 console.log('pushed?');
                 console.log(user.uid);
                 const random = Math.random();

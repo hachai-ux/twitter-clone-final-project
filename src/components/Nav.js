@@ -17,11 +17,11 @@ const Nav = (props) => {
     
             <ul className="nav-links">
                 <li >
-                    <Link to='/'><img src={twitterCloneLogo} alt="Twitter Clone Logo" width="26" height="26"></img>
+                    <Link to='/home'><img src={twitterCloneLogo} alt="Twitter Clone Logo" width="26" height="26"></img>
                     </Link>
                 </li>
                 <li>
-                    <Link to='/'><FontAwesomeIcon icon={faHome} />
+                    <Link to='/home'><FontAwesomeIcon icon={faHome} />
                     </Link>
                 </li>
                 <li>
