@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route} from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import Nav from "./components/Nav";
 import Homepage from "./sites/Homepage";
 import Profile from "./sites/Profile";
@@ -63,6 +63,19 @@ const Routes = () => {
     const changeNewUserCreatedStatus = () => {
         setNewUserCreated(true);
     }
+
+    const PrivateRoute = ({ children, ...rest }) => {
+        return (
+            <Route {...rest} render={() => {
+                
+                    return user!==null? children : <Redirect to="/" />
+                
+            }}>
+
+            </Route>
+
+        )
+    };
 
     useEffect(() => {
 
@@ -179,35 +192,43 @@ const Routes = () => {
     return (
         <div className="container">
                     <BrowserRouter>
-                        
-                        
-                            <Switch>
                                 <Route exact path="/">
                                     <LandingPage db={db} changeNewUserCreatedStatus={changeNewUserCreatedStatus} />
-                    </Route>
-                    <Nav username={username} />
-                    <div className='content'>
-                                <Route exact path="/home">
-                                    <Homepage user={user} username={username} db={db} />
                                 </Route>
-                                <Route exact path="/signup">
-                                    <SignUp db={db} />
-                                </Route>
-                   
-                                <Route exact path="/login">
-                                    <Login db={db} />
-                                </Route>
-                                <Route exact path="/:profilename">
-                                    <Profile user={user} username={username} db={db} />
-                                </Route>
-                                <Route exact path="/:profilename/status/:statusid">
-                                    <StatusPage username={username} user={user} db={db} />
-                        </Route>
-                        </div>
-                            </Switch>
                         
-       
-           
+                            <Switch>
+                            <PrivateRoute exact path="/home">
+                                <Nav username={username} />
+                                    <div className='content'>
+                                        <Homepage user={user} username={username} db={db} />
+                            </div>
+                            </PrivateRoute>
+                           
+                            <PrivateRoute exact path="/signup">
+                                <Nav username={username} />
+                                    <div className='content'>
+                                <SignUp db={db} />
+                                </div>
+                    </PrivateRoute>
+                     <PrivateRoute exact path="/login">
+                                <Nav username={username} />
+                                        <div className='content'>
+                                                <Login db={db} />
+                                                </div>
+                        </PrivateRoute>
+                            <PrivateRoute exact path="/:profilename">
+                                <Nav username={username} />
+                                            <div className='content'>
+                                <Profile user={user} username={username} db={db} />
+                            </div>
+                                        </PrivateRoute>
+                            <PrivateRoute exact path="/:profilename/status/:statusid">
+                                <Nav username={username} />
+                                <div className='content'>
+                                    <StatusPage username={username} user={user} db={db} />
+                                    </div>
+                            </PrivateRoute>
+                                </Switch>
                     </BrowserRouter>
                 </div>
     )
