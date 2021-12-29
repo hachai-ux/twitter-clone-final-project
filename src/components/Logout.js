@@ -35,6 +35,7 @@ const Logout = (props) => {
         //change Routes ID when unmounts
         return () => {
           
+            console.log("cleanup");
             props.changeRoutesId();
              history.push('/');
         }

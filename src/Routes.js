@@ -213,12 +213,13 @@ const Routes = (props) => {
 
     return (
         <div className="container">
-                    <BrowserRouter>
-                       
+            <BrowserRouter>
+                <Switch>
+                                <Route exact path="/">
                                     <LandingPage db={db} changeNewUserCreatedStatus={changeNewUserCreatedStatus} />
-                              
+                                </Route>
                         
-                            <Switch>
+                            
                             <PrivateRoute exact path="/home">
                                 <Nav changeRoutesId={props.changeRoutesId} username={username} resetUsername={resetUsername}/>
                                     <div className='content'>

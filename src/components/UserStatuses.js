@@ -61,8 +61,9 @@ const UserStatuses = (props) => {
         //can use helper to check if username is loaded
 
            let batches = [];
-           let sortedBatches = [];
-
+        let sortedBatches = [];
+        let unsubbers = [];
+        
         console.log(props.username);
 
         const getFollowedIds = async () => {
@@ -96,7 +97,7 @@ const UserStatuses = (props) => {
                 
         const getFeed = async () => {
             
-            if (props.username !== null) {
+            if (props.username !== null && props.user !== null) {
                
                  //get feed of all followed ids
                 
@@ -182,6 +183,8 @@ const UserStatuses = (props) => {
                     
                     
                 });
+                console.log(unsubscribe);
+                unsubbers = unsubbers.concat(unsubscribe);
                 
                 
             }
@@ -203,7 +206,17 @@ const UserStatuses = (props) => {
 
    
         
-        return () => { };
+        return () => {
+            //detach listeners
+            if (unsubbers.length > 0) {
+                unsubbers.forEach(unsubber => {
+                    console.log('unsub');
+                    unsubber();
+                })
+            }
+            
+          
+         };
         
     }, [props.username]);
 
