@@ -50,7 +50,7 @@ ui.start('#firebaseui-auth-container', {
 */
 
 
-const Routes = () => {
+const Routes = (props) => {
 
     const [username, setUsername] = useState(null);
     const [user, setUser] = useState(null);
@@ -64,11 +64,19 @@ const Routes = () => {
         setNewUserCreated(true);
     }
 
+    const resetUsername = () => {
+        setUsername(null);
+    }
+
+    const changeUsername = (passedUsername) => {
+        setUsername(passedUsername);
+    }
+
     const PrivateRoute = ({ children, ...rest }) => {
         return (
             <Route {...rest} render={() => {
                 
-                    return user!==null? children : <Redirect to="/" />
+                    return (user!==null )? children : <Redirect to="/" />
                 
             }}>
 
@@ -81,7 +89,7 @@ const Routes = () => {
         return (
             <Route {...rest} render={() => {
                 
-                    return user==null? children : <Redirect to="/home" />
+                return (user === null)? children : <Redirect to="/home" />
                 
             }}>
 
@@ -99,6 +107,7 @@ const Routes = () => {
 
         console.log(userCurrent);
 
+        //probably redundant
         const getUsername = async () => {
             if (userCurrent) {
                 // User is signed in, see docs for a list of available properties
@@ -142,7 +151,7 @@ const Routes = () => {
             
         getUsername();
 
-    }, [newUserCreated]);
+    }, [newUserCreated, username]);
    
 
     useEffect(() => {
@@ -164,7 +173,7 @@ const Routes = () => {
                 querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
                     
-
+                    //doesn't reach because not written in database yet when user is created
                     //loop through documents and get username for the uid
                     if (doc.data().uid === user.uid) {
                     
@@ -205,38 +214,38 @@ const Routes = () => {
     return (
         <div className="container">
                     <BrowserRouter>
-                                <LoggedInRoute exact path="/">
+                       
                                     <LandingPage db={db} changeNewUserCreatedStatus={changeNewUserCreatedStatus} />
-                                </LoggedInRoute>
+                              
                         
                             <Switch>
                             <PrivateRoute exact path="/home">
-                                <Nav username={username} />
+                                <Nav changeRoutesId={props.changeRoutesId} username={username} resetUsername={resetUsername}/>
                                     <div className='content'>
                                         <Homepage user={user} username={username} db={db} />
                             </div>
                             </PrivateRoute>
                            
                             <PrivateRoute exact path="/signup">
-                                <Nav username={username} />
+                                <Nav changeRoutesId={props.changeRoutesId} username={username} resetUsername={resetUsername} />
                                     <div className='content'>
-                                <SignUp db={db} />
+                                <SignUp db={db} changeUsername={changeUsername} />
                                 </div>
-                    </PrivateRoute>
-                     <PrivateRoute exact path="/login">
-                                <Nav username={username} />
+                            </PrivateRoute>
+                             <PrivateRoute exact path="/login">
+                                    <Nav changeRoutesId={props.changeRoutesId} username={username}resetUsername={resetUsername} />
                                         <div className='content'>
                                                 <Login db={db} />
                                                 </div>
-                        </PrivateRoute>
+                            </PrivateRoute>
                             <PrivateRoute exact path="/:profilename">
-                                <Nav username={username} />
-                                            <div className='content'>
+                                <Nav changeRoutesId={props.changeRoutesId} username={username} resetUsername={resetUsername}/>
+                                <div className='content'>
                                 <Profile user={user} username={username} db={db} />
-                            </div>
-                                        </PrivateRoute>
+                                </div>
+                            </PrivateRoute>
                             <PrivateRoute exact path="/:profilename/status/:statusid">
-                                <Nav username={username} />
+                                <Nav changeRoutesId={props.changeRoutesId} username={username} resetUsername={resetUsername} />
                                 <div className='content'>
                                     <StatusPage username={username} user={user} db={db} />
                                     </div>

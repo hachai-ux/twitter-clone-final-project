@@ -1,32 +1,44 @@
-import { useState} from 'react';
+import { useState, useEffect} from 'react';
 import { getAuth, signOut } from "firebase/auth";
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsisH} from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+
 
 const Logout = (props) => {
 
     const [dropdownStatus, setDropdownStatus] = useState(false);
 
-     const history = useHistory();
+    const history = useHistory();
          
     const logout = async () => {
        
     
         const auth = getAuth();
-        console.log(auth);
+       
         try {
+            console.log(auth);
             await signOut(auth);
+            
             //signed out
             console.log(auth.currentUser);
-            history.push('/');
+           
         }
-        catch(error) {
-        // An error happened.
+        catch (error) {
+            // An error happened.
         };
 
-       
-}
+    
+    }
+    
+    useEffect(() => {
+        //change Routes ID when unmounts
+        return () => {
+          
+            props.changeRoutesId();
+             history.push('/');
+        }
+    },[]);
 
     const showDropdown = (e) => {
       

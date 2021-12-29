@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Routes from './Routes';
 import './style.css';
 import Context from './context/Context';
+import { useState } from 'react';
+import RoutesWrapper from './RoutesWrapper';
+
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Context>
-      <Routes/>
+      <RoutesWrapper />
     </Context>
     
   </React.StrictMode>,

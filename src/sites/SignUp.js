@@ -54,9 +54,12 @@ const SignUp = (props) => {
                 const user = userCredential.user;
                 // ...
                 console.log(user);
-                history.push('/home');
+               
                 console.log('pushed?');
                 console.log(user.uid);
+                console.log(username);
+                
+   
                 const random = Math.random();
                 //set username, but without checking for email validation(better to set username after email validation)
               
@@ -92,7 +95,7 @@ const SignUp = (props) => {
                 props.changeNewUserCreatedStatus();
         
                 await sendEmailVerification(auth.currentUser);
-    
+                history.push('/home');
                 closeForm();
                
            

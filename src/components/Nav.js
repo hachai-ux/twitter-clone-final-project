@@ -29,7 +29,7 @@ const Nav = (props) => {
                     </Link>
                 </li>
                          <li>
-                    <Logout />
+                    <Logout changeRoutesId={props.changeRoutesId} resetUsername={props.resetUsername}/>
                 </li>
                
                 
