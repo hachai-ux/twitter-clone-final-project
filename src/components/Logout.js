@@ -36,8 +36,9 @@ const Logout = (props) => {
         return () => {
           
             console.log("cleanup");
+               history.push('/');
             props.changeRoutesId();
-             history.push('/');
+          
         }
     },[]);
 

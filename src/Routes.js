@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect, useLocation, useHistory} from "react-router-dom";
 import Nav from "./components/Nav";
 import Homepage from "./sites/Homepage";
 import Profile from "./sites/Profile";
@@ -50,11 +50,18 @@ ui.start('#firebaseui-auth-container', {
 */
 
 
+//Bugs:
+//Existing user leads to signup bug
+//Users not redirected to home when reopen page while user logged in
+
 const Routes = (props) => {
 
     const [username, setUsername] = useState(null);
     const [user, setUser] = useState(null);
     const [newUserCreated, setNewUserCreated] = useState(false);
+
+    
+    const history = useHistory();
 
   
     console.log(username);
@@ -76,7 +83,8 @@ const Routes = (props) => {
         return (
             <Route {...rest} render={() => {
                 
-                    return (user!==null )? children : <Redirect to="/" />
+                console.log(user);
+                return (user !== null) ? children : <Redirect to='/' />
                 
             }}>
 
@@ -129,6 +137,7 @@ const Routes = (props) => {
 
                         setUsername(doc.id);
                         console.log(doc.id);
+                       
                     }
                 });
                 
@@ -180,6 +189,7 @@ const Routes = (props) => {
 
                         setUsername(doc.id);
                         console.log(doc.id);
+                       
                     }
                 });
                 
