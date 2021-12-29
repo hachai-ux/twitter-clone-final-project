@@ -237,7 +237,7 @@ const UserStatuses = (props) => {
 
 
     return (
-        <div>
+        <div className="user-statuses">
             <ul>{statuses}</ul>
       </div>
         

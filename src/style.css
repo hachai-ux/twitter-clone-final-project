@@ -263,17 +263,25 @@ ul {
 .home-content {
   display: flex;
   flex-direction: row;
+  min-height: 100vh;
 }
 
 .home-top-bar {
-  margin: 5px 0;
+  padding: 11px;
 }
 
 .home-main {
   flex: 3;
-  padding: 11px;
+  margin-right: 11px;
   border-right: 1px solid rgb(197, 197, 197);
   border-left: 1px solid rgb(197, 197, 197);
+  display: flex;
+  flex-direction: column;
+}
+
+.home-main .user-statuses {
+  padding: 11px;
+  flex: 100;
 }
 
 .home-sidebar {
@@ -283,7 +291,10 @@ ul {
 .status-poster-form {
   display: flex;
   flex-direction: column;
-  margin: 11px 0;
+
+  padding: 11px;
+  border-bottom: 1px solid rgb(197, 197, 197);
+  box-sizing: border-box;
 }
 
 .status-poster-form .status-poster-content {
