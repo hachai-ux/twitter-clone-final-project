@@ -73,7 +73,7 @@ const Login = (props) => {
             //test user state after dispatch
             console.log(userState);
             
-            history.push('/');
+            history.push('/home');
         }
         
     

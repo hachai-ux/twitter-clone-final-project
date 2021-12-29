@@ -105,7 +105,9 @@ const [profileDocs, setProfileDocs] = useState([]);
     return (
         <div className="profile-suggestions">
             <p>Who to follow</p>
-            {profileItems}
+            <ul>
+                {profileItems}
+            </ul>
         </div>
     )
 }

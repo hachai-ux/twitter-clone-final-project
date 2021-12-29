@@ -27,10 +27,18 @@ const Homepage = (props) => {
 
             return (
                 
-                <div>
+                <div className="home-content">
+                    <div className="home-main">
+                        <div className="home-top-bar">
+                            <h3>Home</h3>
+                    </div>
+                    
                     <StatusPoster db={props.db} username={props.username} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted}/>
-                    <UserStatuses db={props.db} username={props.username} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
-                    <ProfileSuggestions db={props.db} username={props.username} user={props.user} />
+                        <UserStatuses db={props.db} username={props.username} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
+                    </div>
+                    <div className="home-sidebar">
+                        <ProfileSuggestions db={props.db} username={props.username} user={props.user} />
+                        </div>
                 </div>
             )
             // ...
@@ -45,7 +53,7 @@ const Homepage = (props) => {
 
     return (
         <div className="homepage">
-            <h1>Home</h1>
+            
             <LoggedIn />
             
         </div>

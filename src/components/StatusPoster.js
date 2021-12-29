@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { collection, serverTimestamp, addDoc, updateDoc} from 'firebase/firestore';
+import { collection, serverTimestamp, addDoc, updateDoc } from 'firebase/firestore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle} from '@fortawesome/free-solid-svg-icons';
+
 
 const StatusPoster = (props) => {
 
@@ -49,10 +52,17 @@ const StatusPoster = (props) => {
 
 
     return (
-      <form onSubmit={(e) => { handleSubmit(e) }}>
+        <form className="status-poster-form" onSubmit={(e) => { handleSubmit(e) }}>
+            <div className="status-poster-content">
+                <div className="profile-icon"><FontAwesomeIcon icon={faUserCircle} size="2x" /></div>
+              
             <label htmlFor='status'>
-             <textarea placeholder="What's happening?" value={status}  onChange={(e) => { handleChangeStatus(e)}} />
             </label>
+             <textarea id="status" name="status" placeholder="What's happening?" value={status}  onChange={(e) => { handleChangeStatus(e)}} />
+          
+
+            </div>
+           
         <input type="submit" value="Tweet" />
         </form>
         

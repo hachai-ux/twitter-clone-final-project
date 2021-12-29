@@ -4,7 +4,13 @@
 }
 
 h1,
-h2 {
+h2,
+h3,
+p,
+div,
+a,
+textarea,
+button {
   font-family: TwitterChirpExtendedHeavy, Verdana, -apple-system,
     BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
@@ -14,6 +20,10 @@ h1 {
 }
 h2 {
   font-size: 32px;
+}
+
+ul {
+  list-style: none;
 }
 /* Landing Page */
 .landing-page {
@@ -183,7 +193,7 @@ h2 {
 
 .content {
   z-index: 0;
-  margin-left: 60px;
+  margin-left: 50px;
 }
 
 .nav-links {
@@ -191,7 +201,7 @@ h2 {
   list-style: none;
 }
 
-. .nav-links img {
+.nav-links img {
   margin: 5px 0;
 }
 
@@ -244,4 +254,76 @@ h2 {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
   display: block;
+}
+
+/* Homepage */
+.homepage {
+}
+
+.home-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.home-top-bar {
+  margin: 5px 0;
+}
+
+.home-main {
+  flex: 3;
+  padding: 11px;
+  border-right: 1px solid rgb(197, 197, 197);
+  border-left: 1px solid rgb(197, 197, 197);
+}
+
+.home-sidebar {
+  flex: 1;
+}
+
+.status-poster-form {
+  display: flex;
+  flex-direction: column;
+  margin: 11px 0;
+}
+
+.status-poster-form .status-poster-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-poster-content .profile-icon {
+}
+
+.status-poster-content label {
+}
+
+/* fake centering */
+.status-poster-form textarea {
+  border-style: none;
+  resize: none;
+  padding-top: 18px;
+  flex: 1;
+
+  outline: none;
+}
+
+.status-poster-form input {
+  width: 100px;
+  margin: 11px 0px;
+  border: 0 solid black;
+  border-radius: 50px;
+  box-sizing: border-box;
+  color: white;
+  background: black;
+  display: inline;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  padding: 10px;
+  font-weight: 700;
+  align-self: flex-end;
+  margin-bottom: 11px;
+  cursor: pointer;
 }
