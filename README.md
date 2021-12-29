@@ -19,6 +19,7 @@ Firebase Database Structure<br />
 Firebase Transactions<br />
 Various querying methods<br />
 React Router Dom<br />
+Public/Protected Pages<br />
 React Memo<br />
 etc.<br />
 <br />

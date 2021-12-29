@@ -77,6 +77,19 @@ const Routes = () => {
         )
     };
 
+     const LoggedInRoute = ({ children, ...rest }) => {
+        return (
+            <Route {...rest} render={() => {
+                
+                    return user==null? children : <Redirect to="/home" />
+                
+            }}>
+
+            </Route>
+
+        )
+    };
+
     useEffect(() => {
 
         //get username when new user is automatically logged in from signup
@@ -192,9 +205,9 @@ const Routes = () => {
     return (
         <div className="container">
                     <BrowserRouter>
-                                <Route exact path="/">
+                                <LoggedInRoute exact path="/">
                                     <LandingPage db={db} changeNewUserCreatedStatus={changeNewUserCreatedStatus} />
-                                </Route>
+                                </LoggedInRoute>
                         
                             <Switch>
                             <PrivateRoute exact path="/home">
