@@ -113,16 +113,16 @@ const Follow = (props) => {
     if (docSnapFollowing !== null)
     {
            if (!docSnapFollowing.data().following.hasOwnProperty(props.profilename)) {
-            showButton = <button onClick={(e) => followUser(e)}>Follow</button>
+            showButton = <button className="follow-btn" onClick={(e) => followUser(e)}>Follow</button>
         }
 
            else if (docSnapFollowing.data().following.hasOwnProperty(props.profilename)) {
                console.log(docSnapFollowing);
-            showButton = <button onClick={(e) => followUser(e)}>Following</button>
+            showButton = <button className="follow-btn" onClick={(e) => followUser(e)}>Following</button>
         }
         
     }
-    else showButton = <button onClick={(e) => followUser(e)}>Follow</button>
+    else showButton = <button className="follow-btn" onClick={(e) => followUser(e)}>Follow</button>
  
 
 

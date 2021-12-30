@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import ProfileStatuses from '../components/ProfileStatuses';
 import Follow from '../components/Follow';
 import { doc, getDoc } from 'firebase/firestore';
+import ProfileSuggestions from '../components/ProfileSuggestions';
 
 
 const Profile = (props) => {
@@ -35,7 +36,7 @@ const Profile = (props) => {
     let statusSelection;
     console.log(profileSnap); 
     if (profileSnap !== null) {
-        if (props.user  && profilename === props.username) {
+        if (props.user  && (profilename === props.username)) {
             statusSelection = <UserStatuses db={props.db} username={props.username} user={props.user} statusSubmitted={statusSubmitted} changeStatusSubmitted={changeStatusSubmitted} />
         }
         else if (profilename && profileSnap.exists()) {
@@ -62,10 +63,18 @@ const Profile = (props) => {
 
 
     return (
-        <div className="homepage">
-            <h1>{profilename}</h1>
-            {showFollow}
-            {statusSelection}
+        <div className="profile-content">
+            <div className="profile-main">
+                <div className="profile-header">
+                    <h2>{profilename}</h2>
+                    <div className="profile-follow">{showFollow}</div>
+                </div>
+                {statusSelection}
+            </div>
+            <div className="profile-sidebar">
+                       <ProfileSuggestions db={props.db} username={props.username} user={props.user} />
+            </div>
+           
             
         </div>
         

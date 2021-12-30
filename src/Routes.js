@@ -53,6 +53,8 @@ ui.start('#firebaseui-auth-container', {
 //Bugs:
 //Existing user leads to signup bug
 //Users not redirected to home when reopen page while user logged in
+//User statuses showing up in other profiles(no rerender?)
+//Profile statuses not showing up?
 
 const Routes = (props) => {
 

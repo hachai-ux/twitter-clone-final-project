@@ -501,3 +501,55 @@ ul {
   gap: 6px;
   max-width: 200px;
 }
+
+/* -- Follow button -- */
+
+.profile-content button {
+  width: 80px;
+  border: 0 solid rgb(216, 216, 216);
+  border-radius: 50px;
+  box-sizing: border-box;
+  color: white;
+  background: black;
+  display: inline;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  padding: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* -- Profile Page -- */
+
+.profile-content {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+.profile-content .profile-main {
+  flex: 3 1;
+  border-right: 1px solid rgb(197, 197, 197);
+  border-left: 1px solid rgb(197, 197, 197);
+  display: flex;
+  flex-direction: column;
+}
+.profile-content .profile-sidebar {
+  flex: 1;
+  max-width: 400px;
+}
+
+.profile-main .profile-header {
+  padding: 11px;
+  border-bottom: 1px solid rgb(197, 197, 197);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.profile-header h2 {
+  flex: 1;
+}
+
+.profile-header .profile-follow {
+}
