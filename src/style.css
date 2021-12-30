@@ -280,7 +280,6 @@ ul {
 }
 
 .home-main .user-statuses {
-  padding: 11px;
   flex: 100;
 }
 
@@ -322,7 +321,7 @@ ul {
 
 .status-poster-form input {
   width: 100px;
-  margin: 11px 0px;
+
   border: 0 solid black;
   border-radius: 50px;
   box-sizing: border-box;
@@ -335,6 +334,57 @@ ul {
   padding: 10px;
   font-weight: 700;
   align-self: flex-end;
-  margin-bottom: 11px;
   cursor: pointer;
+}
+
+/* -- Status -- */
+
+.status-container {
+  display: flex;
+  flex-direction: row;
+  color: black;
+  gap: 20px;
+  padding: 22px 11px;
+  border-bottom: 1px solid lightgray;
+}
+
+.status-container a {
+  color: black;
+}
+
+.status-container .status {
+  font-size: 14px;
+}
+
+.status-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.status-content .status-header {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+}
+
+.status-header a {
+  text-decoration: none;
+}
+.status-header .dropdown .dropbtn {
+  color: gray;
+  background: none;
+  padding-bottom: 2px;
+}
+
+.status-header .status-time {
+  flex: 1;
+  font-size: 12px;
+  color: gray;
+}
+
+.retweet-icon {
+  color: gray;
 }

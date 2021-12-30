@@ -2,7 +2,9 @@ import { useState, useEffect, memo, useContext } from 'react';
 import { query, collectionGroup, where, getDocs, doc, onSnapshot, deleteDoc, collection, runTransaction, updateDoc, serverTimestamp} from "firebase/firestore";
 import { UserContext } from '../context/Context';
 import { Link } from 'react-router-dom';
-import { nanoid } from 'nanoid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisH, faRetweet, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 
 
@@ -12,7 +14,7 @@ const Status = (props) => {
     const [originalDoc, setOriginalDoc] = useState(null);
     const [isRetweet, setIsRetweet] = useState(false);
     const [statusPath, setStatusPath] = useState(`/${props.doc.data().username}/status/${props.doc.id}`);
-  
+   
 
 
   
@@ -20,6 +22,17 @@ const Status = (props) => {
     //context redundant
     const contextValue = useContext(UserContext);
     const { userState } = contextValue;
+
+    function formatDate(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear() + "  " + strTime;
+}
 
 
     useEffect(() => {
@@ -229,7 +242,9 @@ const Status = (props) => {
     else {
   
         dropdown = <div className="dropdown">
-            <button onClick={(e) => showDropdown(e)} className="dropbtn">...</button>
+             <FontAwesomeIcon
+                    onClick={(e)=>showDropdown(e)} className="dropbtn" icon={faEllipsisH} size="xs" />
+          
             <Dropdown />
         </div>
     }
@@ -252,20 +267,39 @@ const Status = (props) => {
     const usernamePath = `/${props.username}`;
     let statusContainer;
     if (!props.doc.data().deleted) {
-        statusContainer = <div>
+        statusContainer = <div className="status-container">
         
-            <div><Link to={usernamePath}>@{props.doc.data().username}</Link></div>
-            <div>{props.doc.data().status}</div>
-                <div>{props.doc.data().timestamp.toDate().toString()}</div>
-            <button onClick={(e) => retweet(e)}>Retweet</button>
-            {dropdown}
-             </div>
+          <div className="profile-icon"><FontAwesomeIcon icon={faUserCircle} size="2x" /></div>
+              
+            <div className="status-content">
+                <div className="status-header">
+                    <h5><Link to={usernamePath}>{props.doc.data().username}</Link></h5>
+                  
+                        <div className="status-time">{formatDate(props.doc.data().timestamp.toDate())}</div>
+                 {dropdown}
+                </div>
+                
+                <div className="status">{props.doc.data().status}</div>
+            
+                <div className="retweet-icon"><FontAwesomeIcon onClick={(e) => retweet(e)} icon={faRetweet} size="sm" /></div>
+       
+           
+            </div>
+            </div>
+            
+             
     }
     else if (props.doc.data().deleted === true) {
-        statusContainer = <div>
-            <div><Link to={usernamePath}>@{props.doc.data().username}</Link></div>
+        statusContainer = <div className="status-container">
+            
+             <div className="profile-icon"><FontAwesomeIcon icon={faUserCircle} size="2x" /></div>
+              
+            <div className="status-content">
+                 <h5><Link to={usernamePath}>{props.doc.data().username}</Link></h5>
             <div>{props.doc.data().status}</div>
                 <div>{props.doc.data().timestamp.toDate().toString()}</div>
+            </div>
+           
              </div>
     }
 
