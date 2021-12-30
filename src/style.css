@@ -562,3 +562,28 @@ ul {
 
 .profile-header .profile-follow {
 }
+
+/* -- Status Page -- */
+
+.non-click-status {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 11px;
+}
+
+.non-click-status .status-top {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+.non-click-status .status-time {
+  font-size: 12px;
+  color: gray;
+}
+.non-click-status .profile-icon {
+  padding-right: 14px;
+}
+.non-click-status .status {
+  font-size: 18px;
+}

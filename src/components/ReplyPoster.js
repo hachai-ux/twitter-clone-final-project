@@ -74,10 +74,10 @@ const ReplyPoster = (props) => {
 
 
     return (
-      <form onSubmit={(e) => { handleSubmit(e) }}>
-            <label htmlFor='status'>
-             <textarea placeholder="Tweet your reply" value={status}  onChange={(e) => { handleChangeStatus(e)}} />
-            </label>
+      <form className="status-poster-form" onSubmit={(e) => { handleSubmit(e) }}>
+            <label htmlFor='reply'></label>
+             <textarea id="reply" name="reply" placeholder="Tweet your reply" value={status}  onChange={(e) => { handleChangeStatus(e)}} />
+           
         <input type="submit" value="Reply" />
         </form>
         
