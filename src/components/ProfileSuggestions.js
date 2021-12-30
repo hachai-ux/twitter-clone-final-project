@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { orderBy, startAt, limit, query, collectionGroup, collection, where, getDocs } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import Follow from './Follow';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+
 
 const ProfileSuggestions = (props) => {
 
@@ -88,8 +91,15 @@ const [profileDocs, setProfileDocs] = useState([]);
             if (doc !== null) {
                 const usernamePath = `/${doc.data().username}`;
                 return <li>
-                    <Link to={usernamePath}>{doc.data().username}</Link>
-                    <Follow db={props.db} profileSnap = {doc} profilename={doc.data().username} username={props.username} user= {props.user} />
+                   <div className="profile-suggestions-content">
+                        <Link to={usernamePath}>
+                         
+                                 <FontAwesomeIcon icon={faUserCircle} size="2x" />
+                                <h5>{doc.data().username}</h5>
+                           
+                    </Link>
+                        <Follow db={props.db} profileSnap={doc} profilename={doc.data().username} username={props.username} user={props.user} />
+                        </div>
                 </li>
             
             }
@@ -104,7 +114,7 @@ const [profileDocs, setProfileDocs] = useState([]);
 
     return (
         <div className="profile-suggestions">
-            <p>Who to follow</p>
+            <h4>Who to follow</h4>
             <ul>
                 {profileItems}
             </ul>

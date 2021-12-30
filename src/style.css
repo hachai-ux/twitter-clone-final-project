@@ -279,7 +279,6 @@ ul {
 
 .home-main {
   flex: 3;
-  margin-right: 11px;
   border-right: 1px solid rgb(197, 197, 197);
   border-left: 1px solid rgb(197, 197, 197);
   display: flex;
@@ -292,6 +291,7 @@ ul {
 
 .home-sidebar {
   flex: 1;
+  max-width: 400px;
 }
 
 .status-poster-form {
@@ -333,7 +333,7 @@ ul {
   border-radius: 50px;
   box-sizing: border-box;
   color: white;
-  background: black;
+  background: rgb(204, 38, 52);
   display: inline;
   font-size: 14px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
@@ -445,4 +445,55 @@ ul {
 /* Change color of dropdown links on hover */
 .dropdown-logout a:hover {
   background-color: #ddd;
+}
+
+/* -- Profile Suggestions -- */
+
+.profile-suggestions {
+  background: rgb(241, 241, 241);
+  border-radius: 20px;
+  padding: 16px;
+  margin: 11px;
+  color: black;
+}
+
+.profile-suggestions ul {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 11px 0;
+}
+
+.profile-suggestions button {
+  width: 80px;
+  border: 0 solid rgb(216, 216, 216);
+  border-radius: 50px;
+  box-sizing: border-box;
+  color: white;
+  background: black;
+  display: inline;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  padding: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.profile-suggestions .profile-suggestions-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-suggestions a {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  color: black;
+  text-decoration: none;
+  align-items: center;
+  gap: 6px;
+  max-width: 200px;
 }
