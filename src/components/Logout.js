@@ -65,7 +65,7 @@ if (!e.target.matches('.dropdown') && !e.target.matches('.dropbtn')) {
     const Dropdown = () => {
         if (dropdownStatus === true) {
             return (
-                 <div id="myDropdown" className="dropdown-content">
+                 <div id="myDropdown" className="dropdown-logout">
                         <button onClick={logout}>Log out</button>
                       
                     </div>
