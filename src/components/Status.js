@@ -257,10 +257,10 @@ const Status = (props) => {
         replies = null;
     }
     else if (props.doc.data().count === 1) {
-        replies = <div>{props.doc.data().count} reply</div>
+        replies = <div className="replies">{props.doc.data().count} reply</div>
     }
     else if(props.doc.data().count){
-        replies = <div>{props.doc.data().count} replies</div>
+        replies = <div className="replies">{props.doc.data().count} replies</div>
     }
 
     //check if status exists or was deleted
@@ -283,7 +283,7 @@ const Status = (props) => {
             
                 <div className="retweet-icon"><FontAwesomeIcon onClick={(e) => retweet(e)} icon={faRetweet} size="sm" /></div>
        
-           
+             {replies}
             </div>
             </div>
             
@@ -335,7 +335,7 @@ const Status = (props) => {
     if (!props.doc.data().retweet) {
         statusType = <div>
             {statusContainer}
-            {replies}
+           
         </div>
     }
     else if (props.doc.data().retweet === true) {

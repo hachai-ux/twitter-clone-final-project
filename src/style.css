@@ -377,6 +377,15 @@ ul {
   align-items: center;
 }
 
+.replies {
+  font-size: 12px;
+  color: gray;
+}
+
+.replies:hover {
+  text-decoration: underline;
+}
+
 .status-header a {
   text-decoration: none;
 }

@@ -55,6 +55,7 @@ ui.start('#firebaseui-auth-container', {
 //Users not redirected to home when reopen page while user logged in
 //User statuses showing up in other profiles(no rerender?)
 //Profile statuses not showing up?
+//Clicking on status reply doesn't show up the status
 
 const Routes = (props) => {
 
