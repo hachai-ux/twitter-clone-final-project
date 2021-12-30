@@ -464,6 +464,10 @@ ul {
   padding: 11px 0;
 }
 
+.profile-suggestions h4 {
+  padding-bottom: 11px;
+}
+
 .profile-suggestions button {
   width: 80px;
   border: 0 solid rgb(216, 216, 216);
