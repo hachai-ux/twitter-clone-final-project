@@ -71,9 +71,12 @@ const Profile = (props) => {
                 </div>
                 {statusSelection}
             </div>
+
+            {/*
             <div className="profile-sidebar">
                        <ProfileSuggestions db={props.db} username={props.username} user={props.user} />
-            </div>
+                </div>
+            */}
            
             
         </div>
