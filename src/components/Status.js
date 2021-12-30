@@ -295,9 +295,11 @@ const Status = (props) => {
              <div className="profile-icon"><FontAwesomeIcon icon={faUserCircle} size="2x" /></div>
               
             <div className="status-content">
-                 <h5><Link to={usernamePath}>{props.doc.data().username}</Link></h5>
-            <div>{props.doc.data().status}</div>
-                <div>{props.doc.data().timestamp.toDate().toString()}</div>
+                <div className="status-header">
+                    <h5><Link to={usernamePath}>{props.doc.data().username}</Link></h5></div>
+                 <div className="status-time">{formatDate(props.doc.data().timestamp.toDate())}</div>
+            <div className="status">{props.doc.data().status}</div>
+                
             </div>
            
              </div>
@@ -309,12 +311,21 @@ const Status = (props) => {
    
     
     if (originalDoc) {
-        retweetContainer = <div>
-            <div><Link to={usernamePath}>@{originalDoc.data().username}</Link></div>
-            <div>{originalDoc.data().status}</div>
-                <div>{originalDoc.data().timestamp.toDate().toString()}</div>
-            <button onClick={(e) => retweet(e)}>Retweet</button>
-             </div>
+        retweetContainer = <div className="status-container">
+            
+               <div className="profile-icon"><FontAwesomeIcon icon={faUserCircle} size="2x" /></div>
+            
+            <div className="status-content">
+                <div className="status-header">
+                    <h5><Link to={usernamePath}>@{originalDoc.data().username}</Link></h5>
+                     <div className="status-time">{formatDate(originalDoc.data().timestamp.toDate())}</div>
+                    </div>
+            <div className="status">{originalDoc.data().status}</div>
+                
+                 <div className="retweet-icon"><FontAwesomeIcon onClick={(e) => retweet(e)} icon={faRetweet} size="sm" /></div>
+          
+            </div>
+            </div>
          
         
     }
@@ -328,8 +339,10 @@ const Status = (props) => {
         </div>
     }
     else if (props.doc.data().retweet === true) {
-        statusType = <div>
-            You retweeted
+        statusType = <div className="retweet-container">
+            <div className="retweet-header"><FontAwesomeIcon className="you-retweeted" icon={faRetweet} size="xs" />
+                <p>You retweeted</p>
+                </div>
              {retweetContainer}
         </div>
     }

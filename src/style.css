@@ -173,7 +173,7 @@ ul {
   display: flex;
   flex-direction: column;
   height: 100%; /* 100% Full-height */
-  width: 50px; /* 0 width - change this with JavaScript */
+  width: 51px; /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
   top: 0;
@@ -344,7 +344,7 @@ ul {
   flex-direction: row;
   color: black;
   gap: 20px;
-  padding: 22px 11px;
+  padding: 16px 11px;
   border-bottom: 1px solid lightgray;
 }
 
@@ -373,6 +373,11 @@ ul {
 .status-header a {
   text-decoration: none;
 }
+
+.status-header a:hover {
+  text-decoration: underline;
+}
+
 .status-header .dropdown .dropbtn {
   color: gray;
   background: none;
@@ -387,4 +392,18 @@ ul {
 
 .retweet-icon {
   color: gray;
+}
+
+.retweet-container {
+  color: gray;
+  display: flex;
+  flex-direction: column;
+}
+
+.retweet-header {
+  display: flex;
+  font-size: 13px;
+  align-items: center;
+  gap: 11px;
+  padding: 5px 11px;
 }
