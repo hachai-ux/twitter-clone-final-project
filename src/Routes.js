@@ -62,6 +62,7 @@ const Routes = (props) => {
     const [username, setUsername] = useState(null);
     const [user, setUser] = useState(null);
     const [newUserCreated, setNewUserCreated] = useState(false);
+    const [authStateLoaded, setAuthStateLoaded] = useState(false);
 
     
     const history = useHistory();
@@ -82,31 +83,46 @@ const Routes = (props) => {
         setUsername(passedUsername);
     }
 
+    //user needs to be set before authStateLoaded
+
     const PrivateRoute = ({ children, ...rest }) => {
-        return (
-            <Route {...rest} render={() => {
+         console.log(authStateLoaded);
+    
+        if (authStateLoaded === true) {
+            console.log(user);
+    
+            return (
                 
-                console.log(user);
-                return (user !== null) ? children : <Redirect to='/' />
+                <Route {...rest} render={() => {
                 
-            }}>
+                    console.log(user);
+                    return (user !== null) ? children : <Redirect to='/' />
+                
+                }}>
 
-            </Route>
+                </Route>
 
-        )
+            )
+        }
+        else return null;
     };
 
-     const LoggedInRoute = ({ children, ...rest }) => {
-        return (
-            <Route {...rest} render={() => {
+    const LoggedInRoute = ({ children, ...rest }) => {
+        if (authStateLoaded) {
+            
+            return (
+                <Route {...rest} render={() => {
                 
-                return (user === null)? children : <Redirect to="/home" />
+                    return (user === null) ? children : <Redirect to="/home" />
                 
-            }}>
+                }}>
 
-            </Route>
+                </Route>
 
-        )
+            )
+         
+        }
+        else return null;
     };
 
     useEffect(() => {
@@ -171,7 +187,8 @@ const Routes = (props) => {
 
         const auth = getAuth();
         
-            onAuthStateChanged(auth, async (user) => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+           
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
@@ -208,10 +225,11 @@ const Routes = (props) => {
             
                 };
                 
-                //likely needs cleanup for user
+             setAuthStateLoaded(true);
+                
         });
             
-       
+       return () => unsubscribe()
         
 
     }, []);
@@ -228,9 +246,9 @@ const Routes = (props) => {
         <div className="container">
             <BrowserRouter>
                 <Switch>
-                                <Route exact path="/">
+                                <LoggedInRoute exact path="/">
                                     <LandingPage db={db} changeNewUserCreatedStatus={changeNewUserCreatedStatus} />
-                                </Route>
+                                </LoggedInRoute>
                         
                             
                             <PrivateRoute exact path="/home">
