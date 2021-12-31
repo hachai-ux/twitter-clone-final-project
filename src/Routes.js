@@ -51,11 +51,12 @@ ui.start('#firebaseui-auth-container', {
 
 
 //Bugs:
-//Existing user leads to signup bug
-//Users not redirected to home when reopen page while user logged in
+//Existing user leads to signup bug(solved)
+//Users not redirected to home when reopen page while user logged in(solved)
 //User statuses showing up in other profiles(no rerender?)
 //Profile statuses not showing up?
 //Clicking on status reply doesn't show up the status
+//Deleted retweets residue
 
 const Routes = (props) => {
 

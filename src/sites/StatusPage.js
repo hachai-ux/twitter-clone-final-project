@@ -36,6 +36,29 @@ const StatusPage = (props) => {
     }, [statusid]);
 
 
+    //quick fix for replies collection with their own status page
+    //statuses need their own collection for the homefeed
+     useEffect(() => {
+
+        const getDocument = async () => {
+            const q = query(collectionGroup(props.db, 'Replies'), where('docId', '==', statusid));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((d) => {
+                console.log(d);
+                setStatusDoc(d);
+            });
+            
+            
+          
+            
+            
+        }
+       
+        getDocument();
+
+    }, [statusid]);
+
+
    
 
     console.log(statusDoc)
