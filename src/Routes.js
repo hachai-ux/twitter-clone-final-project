@@ -57,6 +57,8 @@ ui.start('#firebaseui-auth-container', {
 //Profile statuses not showing up?
 //Clicking on status reply doesn't show up the status
 //Deleted retweets residue
+//Home Feed appearing in User page
+//Clicking on status profile links to user profile
 
 const Routes = (props) => {
 
