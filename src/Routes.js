@@ -56,6 +56,7 @@ ui.start('#firebaseui-auth-container', {
 //Home Feed appearing in User page(solved)
 //Clicking on status profile links to user profile(solved)
 //Clicking on status reply doesn't show up the status(solved)
+//Status link doesn't update feed
 //Deleted retweets residue
 
 

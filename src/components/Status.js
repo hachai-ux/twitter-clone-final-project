@@ -317,7 +317,7 @@ const Status = (props) => {
             
             <div className="status-content">
                 <div className="status-header">
-                    <h5><Link to={usernamePath}>@{originalDoc.data().username}</Link></h5>
+                    <h5><Link to={usernamePath}>{originalDoc.data().username}</Link></h5>
                      <div className="status-time">{formatDate(originalDoc.data().timestamp.toDate())}</div>
                     </div>
             <div className="status">{originalDoc.data().status}</div>
