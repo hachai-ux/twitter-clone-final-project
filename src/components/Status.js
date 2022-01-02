@@ -264,7 +264,7 @@ const Status = (props) => {
     }
 
     //check if status exists or was deleted
-    const usernamePath = `/${props.username}`;
+    const usernamePath = `/${props.doc.data().username}`;
     let statusContainer;
     if (!props.doc.data().deleted) {
         statusContainer = <div className="status-container">
