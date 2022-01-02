@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, memo } from 'react';
-import { collection, collectionGroup, query, getDocs, where, orderBy, onSnapshot, onSnapshotsInSync } from 'firebase/firestore';
+import { collection, doc, getDoc, collectionGroup, query, getDocs, where, orderBy, onSnapshot, onSnapshotsInSync } from 'firebase/firestore';
 import Status from './Status.js';
 import { nanoid } from 'nanoid';
 
@@ -74,10 +74,30 @@ const UserStatuses = (props) => {
             if (props.username !== null) {
 
                 uids.current = uids.current.concat(props.user.uid);
-                 console.log(uids.current);
-                const qFollowing = query(collection(props.db, "Users", props.username, "Following"));
-                const qFollowingSnapshot = await getDocs(qFollowing);
-                console.log(qFollowingSnapshot)
+                console.log(uids.current);
+                console.log(props.username);
+                const userDocRef = doc(props.db, "Users", props.username);
+                const qUserSnapshot = await getDoc(userDocRef);
+                console.log(qUserSnapshot.data().following);
+                if (qUserSnapshot.exists()) {
+
+                    for (const currentFollowing in qUserSnapshot.data().following) {
+                        console.log(qUserSnapshot.data().following[currentFollowing]);
+
+                        //check if already exists in uids ref
+                        if (uids.current.indexOf(qUserSnapshot.data().following[currentFollowing]) === -1) {
+                            uids.current = uids.current.concat(qUserSnapshot.data().following[currentFollowing]);
+                        }
+                        console.log(uids.current);
+                    
+                    }
+                }
+                else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+                }       
+
+                /*
                 qFollowingSnapshot.docs.forEach((doc) => {
                     
                     console.log(uids.current);
@@ -89,8 +109,10 @@ const UserStatuses = (props) => {
                    
                     
                     //const q = query(collection(props.db, "Tweets", uid, "Statuses"), orderBy("timestamp", 'desc'));
-                }
-                )
+                } 
+                    */
+                
+                
             };
         }
           
